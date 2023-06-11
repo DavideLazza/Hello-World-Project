@@ -1,14 +1,20 @@
 import 'package:flutter/material.dart';
 
-class Intro2 extends StatelessWidget {
+class Intro3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
         padding: const EdgeInsets.only(top: 180),
         child: Column(
           children: [
+            Image.asset(
+              'images/milan.png',
+              height: 250,
+            ),
+            const SizedBox(height: 100),
             const Text(
-              'MANCHESTER CITY',
+              'ALLA FINE VINCE SEMPRE IL MILAN',
+              textAlign: TextAlign.center,
               style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
             ),
             const Padding(
@@ -18,11 +24,6 @@ class Intro2 extends StatelessWidget {
                 textAlign: TextAlign.justify,
                 style: TextStyle(fontSize: 17),
               ),
-            ),
-            const SizedBox(height: 100),
-            Image.asset(
-              'images/city.png',
-              height: 250,
             ),
           ],
         ));

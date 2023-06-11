@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class Homepage extends StatelessWidget {
-  const Homepage({Key? key}) : super(key: key);
+class HomePage extends StatelessWidget {
+  const HomePage({Key? key}) : super(key: key);
 
   static const routename = 'Homepage';
 
@@ -18,7 +18,7 @@ class Homepage extends StatelessWidget {
         leading: IconButton(
           onPressed: () {},
           icon: const Icon(Icons.menu_rounded),
-          padding: EdgeInsets.only(left: 25),
+          padding: const EdgeInsets.only(left: 25),
         ),
         actions: [
           IconButton(
