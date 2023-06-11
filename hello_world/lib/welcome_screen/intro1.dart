@@ -15,7 +15,10 @@ class Intro1 extends StatelessWidget {
             const Text(
               'LA CHAMPIONS HA UN NUOVO PADRONE',
               textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 25,
+              ),
             ),
             const Padding(
               padding: EdgeInsets.fromLTRB(45, 20, 45, 15),

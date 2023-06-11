@@ -27,7 +27,7 @@ class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-      title: 'login_flow',
+      title: 'Log In',
       onLogin: _loginUser,
       onSignup: _signUpUser,
       onRecoverPassword: _recoverPassword,
@@ -35,6 +35,14 @@ class LoginPage extends StatelessWidget {
         Navigator.of(context).pushReplacement(
             MaterialPageRoute(builder: (context) => const HomePage()));
       },
+      messages: LoginMessages(
+        userHint: "User ID / email",
+      ),
+      theme: LoginTheme(
+        titleStyle: const TextStyle(fontFamily: "Poppins"),
+        bodyStyle: const TextStyle(fontFamily: "Poppins"),
+        textFieldStyle: const TextStyle(fontFamily: "Poppins"),
+      ),
     );
   } // build
 } // LoginScreen
