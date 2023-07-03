@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import 'loginpage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({Key? key}) : super(key: key);
@@ -22,7 +25,10 @@ class HomePage extends StatelessWidget {
         ),
         actions: [
           IconButton(
-              onPressed: () {}, icon: const Icon(Icons.account_circle_outlined))
+              onPressed: () {
+                _toLoginPage(context);
+              },
+              icon: const Icon(Icons.account_circle_outlined))
         ],
       ),
       body: const Column(
@@ -56,5 +62,17 @@ class HomePage extends StatelessWidget {
                 icon: Icon(Icons.flight_takeoff_rounded), label: "Viaggi")
           ]),
     );
-  } //build
+  }
+
+  void _toLoginPage(BuildContext context) async {
+    final sp = await SharedPreferences.getInstance();
+    sp.remove('username');
+
+    //Pop the drawer first
+    Navigator.pop(context);
+    //Then pop the HomePage
+    Navigator.of(context)
+        .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+  } //_toCalendarPage
+  //build
 } //HomePage

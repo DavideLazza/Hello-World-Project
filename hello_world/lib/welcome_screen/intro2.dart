@@ -4,7 +4,7 @@ class Intro2 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.only(top: 180),
+        padding: const EdgeInsets.only(top: 100),
         child: Column(
           children: [
             const Text(
@@ -19,7 +19,7 @@ class Intro2 extends StatelessWidget {
                 style: TextStyle(fontSize: 17),
               ),
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 50),
             Image.asset(
               'images/city.png',
               height: 250,

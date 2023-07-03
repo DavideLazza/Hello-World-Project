@@ -4,14 +4,14 @@ class Intro3 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.only(top: 180),
+        padding: const EdgeInsets.only(top: 100),
         child: Column(
           children: [
             Image.asset(
               'images/milan.png',
               height: 250,
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 50),
             const Text(
               'ALLA FINE VINCE SEMPRE IL MILAN',
               textAlign: TextAlign.center,

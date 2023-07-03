@@ -4,14 +4,14 @@ class Intro1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.only(top: 180),
+        padding: const EdgeInsets.only(top: 100),
         child: Column(
           children: [
             Image.asset(
               'images/champ.png',
               height: 250,
             ),
-            const SizedBox(height: 100),
+            const SizedBox(height: 50),
             const Text(
               'LA CHAMPIONS HA UN NUOVO PADRONE',
               textAlign: TextAlign.center,

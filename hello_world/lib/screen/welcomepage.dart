@@ -13,6 +13,7 @@ class WelcomePage extends StatefulWidget {
   const WelcomePage({Key? key}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _WelcomePageState createState() => _WelcomePageState();
 }
 
@@ -21,30 +22,26 @@ class _WelcomePageState extends State<WelcomePage> {
   bool isLastPage = false;
 
   @override
-  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
+      body: Stack(
         children: [
-          Container(
-            height: 800,
-            child: PageView(
-              controller: controller,
-              onPageChanged: (index) {
-                setState(() {
-                  isLastPage = index == 2;
-                });
-              },
-              children: [
-                Intro1(),
-                Intro2(),
-                Intro3(),
-              ],
-            ),
+          PageView(
+            controller: controller,
+            onPageChanged: (index) {
+              setState(() {
+                isLastPage = index == 2;
+              });
+            },
+            children: [
+              Intro1(),
+              Intro2(),
+              Intro3(),
+            ],
           ),
           isLastPage
               ? Container(
-                  padding: const EdgeInsets.only(top: 20),
+                  alignment: const Alignment(0, 0.85),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -59,11 +56,9 @@ class _WelcomePageState extends State<WelcomePage> {
                             'DO IT LATER',
                           ),
                         ),
-                        Center(
-                          child: SmoothPageIndicator(
-                            controller: controller,
-                            count: 3,
-                          ),
+                        SmoothPageIndicator(
+                          controller: controller,
+                          count: 3,
                         ),
                         TextButton(
                           child: const Text(
@@ -82,18 +77,16 @@ class _WelcomePageState extends State<WelcomePage> {
                       ]),
                 )
               : Container(
-                  padding: const EdgeInsets.only(top: 20),
+                  alignment: const Alignment(0, 0.85),
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         TextButton(
                             onPressed: () => controller.jumpToPage(2),
                             child: const Text('SKIP')),
-                        Center(
-                          child: SmoothPageIndicator(
-                            controller: controller,
-                            count: 3,
-                          ),
+                        SmoothPageIndicator(
+                          controller: controller,
+                          count: 3,
                         ),
                         TextButton(
                             onPressed: () => controller.nextPage(
