@@ -38,7 +38,7 @@ class _FormPageState extends State<FormPage> {
                   fontFamily: "Poppins", fontSize: 18, color: Colors.blueGrey),
               decoration: const InputDecoration(
                   hintText: 'First Name',
-                  hintStyle: TextStyle(color: Colors.blueGrey)),
+                  hintStyle: TextStyle(color: Colors.black)),
             ),
             TextField(
               onChanged: (text) {
@@ -51,7 +51,7 @@ class _FormPageState extends State<FormPage> {
                   fontFamily: "Poppins", fontSize: 18, color: Colors.blueGrey),
               decoration: const InputDecoration(
                   hintText: 'Last Name',
-                  hintStyle: TextStyle(color: Colors.blueGrey)),
+                  hintStyle: TextStyle(color: Colors.black)),
             ),
             TextField(
               onChanged: (text) {
@@ -65,7 +65,7 @@ class _FormPageState extends State<FormPage> {
                   fontFamily: "Poppins", fontSize: 18, color: Colors.blueGrey),
               decoration: const InputDecoration(
                   hintText: 'Height (cm)',
-                  hintStyle: TextStyle(color: Colors.blueGrey)),
+                  hintStyle: TextStyle(color: Colors.black)),
             ),
             TextField(
               onChanged: (text) {
@@ -79,7 +79,7 @@ class _FormPageState extends State<FormPage> {
                   fontFamily: "Poppins", fontSize: 18, color: Colors.blueGrey),
               decoration: const InputDecoration(
                   hintText: 'Weight (kg)',
-                  hintStyle: TextStyle(color: Colors.blueGrey)),
+                  hintStyle: TextStyle(color: Colors.black)),
             ),
             TextField(
               onChanged: (text) {
@@ -92,8 +92,7 @@ class _FormPageState extends State<FormPage> {
               style: const TextStyle(
                   fontFamily: "Poppins", fontSize: 18, color: Colors.blueGrey),
               decoration: const InputDecoration(
-                  hintText: 'Age',
-                  hintStyle: TextStyle(color: Colors.blueGrey)),
+                  hintText: 'Age', hintStyle: TextStyle(color: Colors.black)),
             ),
             TextField(
               onChanged: (text) {
@@ -106,7 +105,7 @@ class _FormPageState extends State<FormPage> {
                   fontFamily: "Poppins", fontSize: 18, color: Colors.blueGrey),
               decoration: const InputDecoration(
                   hintText: 'Gender',
-                  hintStyle: TextStyle(color: Colors.blueGrey)),
+                  hintStyle: TextStyle(color: Colors.black)),
             ),
           ],
         ),

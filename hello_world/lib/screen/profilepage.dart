@@ -69,7 +69,8 @@ class ProfilePage extends StatelessWidget {
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
-                          fontFamily: "Poppins"))
+                          fontFamily: "Poppins",
+                          decoration: TextDecoration.underline))
                 ],
               ),
             ),
@@ -92,7 +93,8 @@ class ProfilePage extends StatelessWidget {
                       style: const TextStyle(
                           color: Colors.white,
                           fontSize: 18,
-                          fontFamily: "Poppins")),
+                          fontFamily: "Poppins",
+                          decoration: TextDecoration.underline)),
                 ],
               ),
             ),
@@ -115,7 +117,8 @@ class ProfilePage extends StatelessWidget {
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
-                            fontFamily: "Poppins")),
+                            fontFamily: "Poppins",
+                            decoration: TextDecoration.underline)),
                   ],
                 )),
             const SizedBox(
@@ -137,7 +140,8 @@ class ProfilePage extends StatelessWidget {
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
-                            fontFamily: "Poppins")),
+                            fontFamily: "Poppins",
+                            decoration: TextDecoration.underline)),
                   ],
                 )),
             const SizedBox(
@@ -159,7 +163,8 @@ class ProfilePage extends StatelessWidget {
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
-                            fontFamily: "Poppins")),
+                            fontFamily: "Poppins",
+                            decoration: TextDecoration.underline)),
                   ],
                 )),
             const SizedBox(
@@ -181,12 +186,31 @@ class ProfilePage extends StatelessWidget {
                         style: const TextStyle(
                             color: Colors.white,
                             fontSize: 18,
-                            fontFamily: "Poppins")),
+                            fontFamily: "Poppins",
+                            decoration: TextDecoration.underline)),
                   ],
                 )),
+            const SizedBox(
+              height: 65,
+            ),
+            ElevatedButton(
+              onPressed: () {
+                _toLoginPage(context);
+              },
+              style: ElevatedButton.styleFrom(
+                  side: const BorderSide(color: Colors.white),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20))),
+              child: const Text(
+                'Log in/out',
+                style: TextStyle(fontFamily: "Poppins", fontSize: 18),
+              ),
+            )
           ],
         ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.startFloat,
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Colors.white,
           onPressed: () {
             Navigator.of(context).push(MaterialPageRoute(
                 builder: (context) => HomePage(
@@ -201,7 +225,7 @@ class ProfilePage extends StatelessWidget {
           },
           child: const Icon(
             Icons.arrow_back_rounded,
-            color: Colors.white,
+            color: Colors.blueGrey,
           ),
         ));
   }

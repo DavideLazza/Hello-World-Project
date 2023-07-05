@@ -15,6 +15,9 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  String userid = "";
+  String psw = "";
+
   @override
   void initState() {
     super.initState();
@@ -30,7 +33,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<String> _loginUser(LoginData data) async {
-    if (data.name == 'davide@unipd.com' && data.password == 'Password1') {
+    if ( //data.name == 'davide@unipd.com' && data.password == 'Password1' ||
+        data.name == userid && data.password == psw) {
       final sp = await SharedPreferences.getInstance();
       sp.setString('username', data.name);
 
@@ -41,11 +45,18 @@ class _LoginPageState extends State<LoginPage> {
   } // _loginUser
 
   Future<String> _signUpUser(SignupData data) async {
-    return 'To be implemented';
+    userid = data.name!;
+    psw = data.password!;
+    return 'you can now logging in';
+    //return 'To be implemented';
   } // _signUpUser
 
   Future<String> _recoverPassword(String email) async {
-    return 'Recover password functionality needs to be implemented';
+    if (email == userid) {
+      return 'Your password is: $psw';
+    } else {
+      return 'Wrong email';
+    }
   } // _recoverPassword
 
   @override

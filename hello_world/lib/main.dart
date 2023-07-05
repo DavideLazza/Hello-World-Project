@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.blueGrey,
           textTheme:
               const TextTheme(bodyMedium: TextStyle(fontFamily: "Poppins"))),
-      home: LoginPage(),
+      home: const LoginPage(),
     );
   }
 }

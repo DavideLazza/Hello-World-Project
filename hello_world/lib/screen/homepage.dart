@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:hello_world/screen/profilepage.dart';
+import 'package:hello_world/screen/welcomepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'loginpage.dart';
@@ -31,13 +32,24 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+            padding: EdgeInsets.all(15),
+            onPressed: () {
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const WelcomePage()));
+            },
+            icon: const Icon(
+              Icons.arrow_back,
+              color: Colors.blueGrey,
+            )),
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actionsIconTheme: const IconThemeData(color: Colors.blueGrey),
-        iconTheme: const IconThemeData(color: Colors.blueGrey),
+        actionsIconTheme: const IconThemeData(color: Colors.blueGrey, size: 30),
+        iconTheme: const IconThemeData(color: Colors.blueGrey, size: 30),
         centerTitle: true,
         actions: [
           IconButton(
+              padding: const EdgeInsets.all(15),
               onPressed: () {
                 _toProfilePage(context);
               },
@@ -47,11 +59,11 @@ class HomePage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          const SizedBox(height: 50),
+          const SizedBox(height: 40),
           Padding(
             padding: const EdgeInsets.only(left: 25.0),
             child: Text(
-              'Welcome $presname!',
+              'Welcome $presname',
               style: const TextStyle(
                 color: Colors.blueGrey,
                 fontSize: 30,
