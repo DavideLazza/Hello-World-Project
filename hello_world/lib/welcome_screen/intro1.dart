@@ -4,28 +4,29 @@ class Intro1 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+        color: Colors.blueGrey,
         padding: const EdgeInsets.only(top: 100),
         child: Column(
           children: [
             Image.asset(
-              'images/champ.png',
-              height: 250,
+              'images/sdg.png',
+              height: 350,
             ),
             const SizedBox(height: 50),
             const Text(
-              'LA CHAMPIONS HA UN NUOVO PADRONE',
+              'SDG',
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 25,
-              ),
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  color: Colors.white),
             ),
             const Padding(
               padding: EdgeInsets.fromLTRB(45, 20, 45, 15),
               child: Text(
-                'Nella notte di Istanbul il Manchester City vince la sua prima Champions League battendo un\'inter mai doma, che avrebbe meritato almeno di andare ai supplementari',
+                'The Sustainable Development Goals (SDG) are a series of 17 goals defined by ONU, in order to have a more sustainable future',
                 textAlign: TextAlign.justify,
-                style: TextStyle(fontSize: 17),
+                style: TextStyle(fontSize: 17, color: Colors.white),
               ),
             ),
           ],

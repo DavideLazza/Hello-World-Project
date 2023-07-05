@@ -45,33 +45,33 @@ class _WelcomePageState extends State<WelcomePage> {
                   child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextButton(
-                          onPressed: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: ((context) => const HomePage())));
-                          },
-                          child: const Text(
-                            'DO IT LATER',
-                          ),
-                        ),
-                        SmoothPageIndicator(
-                          controller: controller,
-                          count: 3,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 160),
+                          child: SmoothPageIndicator(
+                              controller: controller,
+                              count: 3,
+                              effect: WormEffect(
+                                activeDotColor: Colors.blueGrey.shade800,
+                              )),
                         ),
                         TextButton(
-                          child: const Text(
-                            'LOG IN',
-                            style: TextStyle(
-                              color: Colors.black,
-                            ),
+                          child: Text(
+                            'NEXT',
+                            style: TextStyle(color: Colors.blueGrey.shade800),
                           ),
                           onPressed: () {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: ((context) => const LoginPage())));
+                                    builder: ((context) => HomePage(
+                                          presname: "",
+                                          name1: "",
+                                          surname1: "",
+                                          height1: "",
+                                          weight1: "",
+                                          age1: "",
+                                          gender1: "",
+                                        ))));
                           },
                         ),
                       ]),
@@ -83,16 +83,23 @@ class _WelcomePageState extends State<WelcomePage> {
                       children: [
                         TextButton(
                             onPressed: () => controller.jumpToPage(2),
-                            child: const Text('SKIP')),
+                            child: Text(
+                              'SKIP',
+                              style: TextStyle(color: Colors.blueGrey.shade800),
+                            )),
                         SmoothPageIndicator(
                           controller: controller,
                           count: 3,
+                          effect: WormEffect(
+                              activeDotColor: Colors.blueGrey.shade800),
                         ),
                         TextButton(
                             onPressed: () => controller.nextPage(
                                 duration: const Duration(milliseconds: 500),
                                 curve: Curves.easeInOut),
-                            child: const Text('NEXT')),
+                            child: Text('NEXT',
+                                style: TextStyle(
+                                    color: Colors.blueGrey.shade800))),
                       ]),
                 )
         ],

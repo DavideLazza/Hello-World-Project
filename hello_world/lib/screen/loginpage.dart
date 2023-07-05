@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
+import 'package:hello_world/screen/welcomepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'Homepage.dart';
@@ -29,7 +30,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<String> _loginUser(LoginData data) async {
-    if (data.name == 'bug@expert.com' && data.password == '5TrNgP5Wd') {
+    if (data.name == 'davide@unipd.com' && data.password == 'Password1') {
       final sp = await SharedPreferences.getInstance();
       sp.setString('username', data.name);
 
@@ -50,12 +51,12 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return FlutterLogin(
-      title: 'Log In',
+      title: 'Log in',
       onLogin: _loginUser,
       onSignup: _signUpUser,
       onRecoverPassword: _recoverPassword,
       onSubmitAnimationCompleted: () async {
-        _toHomePage(context);
+        _toWelcomePage(context);
       },
       messages: LoginMessages(
         userHint: "User ID / email",
@@ -65,11 +66,36 @@ class _LoginPageState extends State<LoginPage> {
         bodyStyle: const TextStyle(fontFamily: "Poppins"),
         textFieldStyle: const TextStyle(fontFamily: "Poppins"),
       ),
+      children: [
+        Padding(
+            padding: const EdgeInsets.only(top: 500),
+            child: TextButton(
+                onPressed: () {
+                  _toWelcomePage(context);
+                },
+                child: const Text(
+                  'DO IT LATER',
+                  style: TextStyle(color: Colors.white, fontFamily: "Poppins"),
+                )))
+      ],
     );
   }
 
   void _toHomePage(BuildContext context) {
+    Navigator.of(context).pushReplacement(MaterialPageRoute(
+        builder: (context) => HomePage(
+              presname: "",
+              name1: "",
+              surname1: "",
+              height1: "",
+              weight1: "",
+              age1: "",
+              gender1: "",
+            )));
+  }
+
+  void _toWelcomePage(BuildContext context) {
     Navigator.of(context).pushReplacement(
-        MaterialPageRoute(builder: (context) => const HomePage()));
+        MaterialPageRoute(builder: (context) => const WelcomePage()));
   } // build
 } // LoginScreen

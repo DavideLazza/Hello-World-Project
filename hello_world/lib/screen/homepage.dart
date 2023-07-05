@@ -1,11 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hello_world/screen/profilepage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 import 'loginpage.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({
+    Key? key,
+    required this.presname,
+    required this.name1,
+    required this.surname1,
+    required this.height1,
+    required this.weight1,
+    required this.age1,
+    required this.gender1,
+  }) : super(key: key);
+
+  String presname = "",
+      name1 = "",
+      surname1 = "",
+      height1 = "",
+      weight1 = "",
+      age1 = "",
+      gender1 = "";
 
   static const routename = 'Homepage';
 
@@ -15,33 +33,28 @@ class HomePage extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0,
-        actionsIconTheme: const IconThemeData(color: Colors.black87),
-        iconTheme: const IconThemeData(color: Colors.black87),
+        actionsIconTheme: const IconThemeData(color: Colors.blueGrey),
+        iconTheme: const IconThemeData(color: Colors.blueGrey),
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {},
-          icon: const Icon(Icons.menu_rounded),
-          padding: const EdgeInsets.only(left: 25),
-        ),
         actions: [
           IconButton(
               onPressed: () {
-                _toLoginPage(context);
+                _toProfilePage(context);
               },
               icon: const Icon(Icons.account_circle_outlined))
         ],
       ),
-      body: const Column(
+      body: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 100),
+          const SizedBox(height: 50),
           Padding(
-            padding: EdgeInsets.only(left: 25.0),
+            padding: const EdgeInsets.only(left: 25.0),
             child: Text(
-              'Discover',
-              style: TextStyle(
-                color: Colors.black87,
-                fontSize: 25,
+              'Welcome $presname!',
+              style: const TextStyle(
+                color: Colors.blueGrey,
+                fontSize: 30,
                 fontWeight: FontWeight.bold,
               ),
             ),
@@ -64,15 +77,16 @@ class HomePage extends StatelessWidget {
     );
   }
 
-  void _toLoginPage(BuildContext context) async {
-    final sp = await SharedPreferences.getInstance();
-    sp.remove('username');
-
-    //Pop the drawer first
-    Navigator.pop(context);
-    //Then pop the HomePage
-    Navigator.of(context)
-        .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
-  } //_toCalendarPage
+  void _toProfilePage(BuildContext context) {
+    Navigator.of(context).push(MaterialPageRoute(
+        builder: (context) => ProfilePage(
+              name: name1,
+              surname: surname1,
+              height: height1,
+              weight: weight1,
+              age: age1,
+              gender: gender1,
+            )));
+  }
   //build
 } //HomePage
