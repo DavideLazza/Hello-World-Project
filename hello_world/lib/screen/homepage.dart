@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+
+import 'package:hello_world/screen/impactpage.dart';
 import 'package:hello_world/screen/profilepage.dart';
 import 'package:hello_world/screen/welcomepage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-
-import 'loginpage.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({
@@ -33,7 +31,7 @@ class HomePage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
-            padding: EdgeInsets.all(15),
+            padding: const EdgeInsets.all(15),
             onPressed: () {
               Navigator.of(context).push(
                   MaterialPageRoute(builder: (context) => const WelcomePage()));
@@ -70,7 +68,16 @@ class HomePage extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-          )
+          ),
+          const SizedBox(
+            height: 100,
+          ),
+          ElevatedButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ImpactPage()));
+              },
+              child: const Text('pagina test impact'))
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

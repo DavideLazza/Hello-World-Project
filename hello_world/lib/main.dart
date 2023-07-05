@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/screen/Homepage.dart';
 import 'package:hello_world/screen/loginpage.dart';
-import 'package:hello_world/screen/welcomepage.dart';
 
 void main() {
   runApp(const MyApp());

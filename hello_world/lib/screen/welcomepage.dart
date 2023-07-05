@@ -1,8 +1,5 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
 import 'package:hello_world/screen/homepage.dart';
-import 'package:hello_world/screen/loginpage.dart';
 import 'package:hello_world/welcome_screen/intro1.dart';
 import 'package:hello_world/welcome_screen/intro2.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
