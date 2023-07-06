@@ -77,7 +77,7 @@ class HomePage extends StatelessWidget {
                 Navigator.of(context).push(
                     MaterialPageRoute(builder: (context) => ImpactPage()));
               },
-              child: const Text('pagina test impact'))
+              child: const Text('pagina test impact')),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
