@@ -15,54 +15,14 @@ class ImpactPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    _authorize();
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('impact'),
-      ),
       body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            ElevatedButton(
-                onPressed: () async {
-                  final result = await _authorize();
-                  final message =
-                      result == 200 ? 'Request successful' : 'Request failed';
-                  ScaffoldMessenger.of(context)
-                    ..removeCurrentSnackBar()
-                    ..showSnackBar(SnackBar(content: Text(message)));
-                },
-                child: const Text('Authorize the app')),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-                onPressed: () async {
-                  final sp = await SharedPreferences.getInstance();
-                  await sp.remove('access');
-                  await sp.remove('refresh');
-                  ScaffoldMessenger.of(context)
-                    ..removeCurrentSnackBar()
-                    ..showSnackBar(
-                        SnackBar(content: Text('Tokens have been deleted')));
-                },
-                child: const Text('Unauthorize the app')),
-            const SizedBox(
-              height: 10,
-            ),
-            ElevatedButton(
-                onPressed: () async {
-                  final result = await _requestData();
-                  print(result);
-                  final message =
-                      result == null ? 'Request failed' : 'Request successful';
-                  ScaffoldMessenger.of(context)
-                    ..removeCurrentSnackBar()
-                    ..showSnackBar(SnackBar(content: Text(message)));
-                },
-                child: Text('Get the data')),
-          ],
-        ),
+        child: ElevatedButton(
+            onPressed: () {
+              _requestData();
+            },
+            child: Text('ciao')),
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
         Navigator.pop(context);
@@ -70,9 +30,17 @@ class ImpactPage extends StatelessWidget {
     );
   } //build
 
-  //This method allows to check if the IMPACT backend is up
+  //This method allows to  obtain the JWT token pair from IMPACT and store it in SharedPreferences
   Future<int?> _authorize() async {
+    //check if the IMPACT backend is up
+    final urlisup = Impact.baseUrl + Impact.pingEndpoint;
+    final responseisup = await http.get(Uri.parse(urlisup));
+
+    if (responseisup.statusCode == 200) {
+      print('Impact backend is up');
+    }
     //Create the request
+
     final url = Impact.baseUrl + Impact.tokenEndpoint;
     final body = {'username': Impact.username, 'password': Impact.password};
 
@@ -108,7 +76,9 @@ class ImpactPage extends StatelessWidget {
     } //if
 
     //Create the (representative) request
+    // ignore: prefer_const_declarations
     final day = '2023-05-04';
+    // ignore: prefer_interpolation_to_compose_strings
     final url = Impact.baseUrl +
         Impact.stepsEndpoint +
         Impact.patientUsername +
@@ -133,6 +103,7 @@ class ImpactPage extends StatelessWidget {
     } //else
 
     //Return the result
+    print(result);
     return result;
   } //_requestData
 
