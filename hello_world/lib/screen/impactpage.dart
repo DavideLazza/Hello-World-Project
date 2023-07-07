@@ -75,50 +75,47 @@ class ImpactPage extends StatelessWidget {
       access = sp.getString('access');
     } //if
 
-    //Create the (representative) request
-    // ignore: prefer_const_declarations
-    final day = '2023-05-02';
-
     // ignore: prefer_interpolation_to_compose_strings
-    final url = Impact.baseUrl +
+    final urlExercises = Impact.baseUrl +
         Impact.exerciseEndpoint +
         Impact.patientUsername +
-        '/day/$day/';
-
-    final urlcalorie = Impact.baseUrl +
-        'data/v1/exercise/patients/' +
-        'Jpefaq6m58' +
-        '/daterange/start_date/2023-05-01/end_date/2023-05-7/';
+        Impact.dateRange;
 
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
     //Get the response
-    print('Calling: $url');
-    final response = await http.get(Uri.parse(url), headers: headers);
-    final responsecal = await http.get(Uri.parse(urlcalorie), headers: headers);
+    print('Calling: $urlExercises');
+    final response = await http.get(Uri.parse(urlExercises), headers: headers);
 
     //if OK parse the response, otherwise return null
     if (response.statusCode == 200) {
       final decodedResponse = jsonDecode(response.body);
-      final decodedResponsecal = jsonDecode(responsecal.body);
 
-      print(decodedResponsecal['data']);
-      print(decodedResponsecal['data'].length);
+      // print(decodedResponse['data'].length);
+      // print(decodedResponse['data'].length);
+      // print(decodedResponse['data'][2]['data'].length);
+      // print(decodedResponse['data'][2]['data'][2]['activityName']);
 
       //fare doppio ciclo for, uno per i data dello stesso giorno (come adesso) e uno per ciclare i giorni
 
       for (var i = 0; i < decodedResponse['data'].length; i++) {
-        final exercise = Exercise(
-            activityName: decodedResponse['data']['data'][i]['activityName'],
-            calories: decodedResponse['data']['data'][i]['calories'],
-            distance: decodedResponse['data']['data'][i]['distance'],
-            distanceUnit: decodedResponse['data']['data'][i]['distanceUnit'],
-            date: day);
+        for (var j = 0; j < decodedResponse['data'][i]['data'].length; j++) {
+          final exercise = Exercise(
+              activityName: decodedResponse['data'][i]['data'][j]
+                  ['activityName'],
+              calories: decodedResponse['data'][i]['data'][j]['calories'],
+              distance: decodedResponse['data'][i]['data'][j]['distance'],
+              distanceUnit: decodedResponse['data'][i]['data'][j]
+                  ['distanceUnit'],
+              date: decodedResponse['data'][i]['date']);
 
-        exercises.add(exercise);
+          exercises.add(exercise);
+        }
       }
 
-      print(exercises.length);
+      // print(exercises);
+      // print(exercises.length);
+
       //for
     } else {
       return null;

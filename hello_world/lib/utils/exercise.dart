@@ -11,4 +11,9 @@ class Exercise {
       required this.distance,
       required this.distanceUnit,
       required this.date});
+
+  @override
+  String toString() {
+    return 'attività: $activityName, calories: $calories, distance: $distance, distanceUnit: $distanceUnit, date: $date';
+  }
 }
