@@ -1,9 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/screen/impactpage.dart';
+import 'package:hello_world/database/database.dart';
+import 'package:hello_world/repository/databaseRepository.dart';
 import 'package:hello_world/screen/loginpage.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(const MyApp());
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  final AppDatabase database =
+      await $FloorAppDatabase.databaseBuilder('app_database.db').build();
+
+  final databaseRepository = DatabaseRepository(database: database);
+
+  runApp(ChangeNotifierProvider<DatabaseRepository>(
+    create: (context) => databaseRepository,
+    child: MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
