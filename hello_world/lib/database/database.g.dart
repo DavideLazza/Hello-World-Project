@@ -137,6 +137,24 @@ class _$ExerciseDao extends ExerciseDao {
   }
 
   @override
+  Future<int?> getExercisesCount() async {
+    return _queryAdapter.query('SELECT COUNT(name) FROM Exercise',
+        mapper: (Map<String, Object?> row) => row.values.first as int);
+  }
+
+  @override
+  Future<int?> getTotalCalories() async {
+    return _queryAdapter.query('SELECT SUM(cal) FROM Exercise',
+        mapper: (Map<String, Object?> row) => row.values.first as int);
+  }
+
+  @override
+  Future<double?> getTotalKm() async {
+    return _queryAdapter.query('SELECT SUM(dist) FROM Exercise',
+        mapper: (Map<String, Object?> row) => row.values.first as double);
+  }
+
+  @override
   Future<void> deleteExercises() async {
     await _queryAdapter.queryNoReturn('DELETE FROM Exercise');
   }

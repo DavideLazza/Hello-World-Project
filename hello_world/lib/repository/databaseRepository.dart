@@ -15,6 +15,21 @@ class DatabaseRepository extends ChangeNotifier {
     return results;
   } //findAllTodos
 
+  Future<int?> getExercisesCount() async {
+    final result = await database.exerciseDao.getExercisesCount();
+    return result;
+  }
+
+  Future<int?> getTotalCalories() async {
+    final result = await database.exerciseDao.getTotalCalories();
+    return result;
+  }
+
+  Future<double?> getTotalKm() async {
+    final result = await database.exerciseDao.getTotalKm();
+    return result;
+  }
+
   //This method wraps the insertTodo() method of the DAO.
   //Then, it notifies the listeners that something changed.
   Future<void> insertExercises(Exercise x) async {

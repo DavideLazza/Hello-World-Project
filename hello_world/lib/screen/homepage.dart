@@ -1,8 +1,12 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
+import 'package:hello_world/repository/databaseRepository.dart';
 import 'package:hello_world/screen/impactpage.dart';
 import 'package:hello_world/screen/profilepage.dart';
 import 'package:hello_world/screen/welcomepage.dart';
+import 'package:provider/provider.dart';
 
 class HomePage extends StatelessWidget {
   HomePage({
@@ -47,6 +51,12 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
+              onPressed: () {
+                Navigator.of(context).push(
+                    MaterialPageRoute(builder: (context) => ImpactPage()));
+              },
+              icon: Icon(Icons.analytics_outlined)),
+          IconButton(
               padding: const EdgeInsets.all(15),
               onPressed: () {
                 _toProfilePage(context);
@@ -54,31 +64,87 @@ class HomePage extends StatelessWidget {
               icon: const Icon(Icons.account_circle_outlined))
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          const SizedBox(height: 40),
-          Padding(
-            padding: const EdgeInsets.only(left: 25.0),
-            child: Text(
-              'Welcome $presname',
+      body: Padding(
+        padding: const EdgeInsets.all(30),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            const SizedBox(
+              height: 50,
+            ),
+            Text(
+              'Welcome $presname,',
               style: const TextStyle(
                 color: Colors.blueGrey,
-                fontSize: 30,
+                fontSize: 32,
                 fontWeight: FontWeight.bold,
               ),
             ),
-          ),
-          const SizedBox(
-            height: 100,
-          ),
-          ElevatedButton(
-              onPressed: () {
-                Navigator.of(context).push(
-                    MaterialPageRoute(builder: (context) => ImpactPage()));
-              },
-              child: const Text('pagina test impact')),
-        ],
+            const Text(
+              'this is a recap of your week\'s activities',
+              style: TextStyle(
+                color: Colors.blueGrey,
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+            const SizedBox(
+              height: 80,
+            ),
+
+            // FUTURE BUILDER DAI CHE 'NDEMO
+            Consumer<DatabaseRepository>(builder: (context, dbr, child) {
+              return FutureBuilder(
+                  future: dbr.getExercisesCount(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final data = snapshot.data as int;
+                      return Text('N° of exercises done: $data');
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  });
+            }),
+            Consumer<DatabaseRepository>(builder: (context, dbr, child) {
+              return FutureBuilder(
+                  future: dbr.getTotalKm(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final data = snapshot.data as double;
+                      return Text('Km covered: $data');
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  });
+            }),
+            Consumer<DatabaseRepository>(builder: (context, dbr, child) {
+              return FutureBuilder(
+                  future: dbr.getTotalCalories(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final data = snapshot.data as int;
+                      return Text('Calories burnt: $data');
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  });
+            }),
+            Consumer<DatabaseRepository>(builder: (context, dbr, child) {
+              return FutureBuilder(
+                  future: dbr.getTotalCalories(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final data = snapshot.data as int;
+                      return Text(
+                          'Calories burnt per day: ${(data / 7).round()}');
+                    } else {
+                      return CircularProgressIndicator();
+                    }
+                  });
+            }),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
           unselectedItemColor: Colors.grey.shade500.withOpacity(0.5),

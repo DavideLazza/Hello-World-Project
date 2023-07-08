@@ -1,14 +1,10 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
 import 'package:hello_world/database/entities/exercise.dart';
 import 'package:hello_world/repository/databaseRepository.dart';
 
-// import 'package:hello_world/database/database.dart';
-// import 'package:hello_world/database/entities/exercise.dart';
-// import 'package:hello_world/repository/databaseRepository.dart';
 import 'package:hello_world/utils/activity.dart';
 
 import 'package:hello_world/utils/impact.dart';
@@ -20,6 +16,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class ImpactPage extends StatelessWidget {
   ImpactPage({super.key});
+
+  List<String> weekdata = [];
+  String? selectedValue;
 
   int l = 0;
   List<Activity>? act1;
@@ -56,6 +55,8 @@ class ImpactPage extends StatelessWidget {
                         act1?[i].distance,
                         act1?[i].distanceUnit,
                         act1?[i].date));
+
+                weekdata.add(act1![i].date!);
               }
               print('data added');
             },
@@ -69,37 +70,39 @@ class ImpactPage extends StatelessWidget {
             icon: Icon(Icons.delete)),
       ]),
 
+      // NEW DISPLAY
+
       // DISPLAY DATA WITH FUTURE BUILDER
 
-      body: Center(
-        child: Consumer<DatabaseRepository>(
-          builder: (context, dbr, child) {
-            return FutureBuilder(
-                future: dbr.findAllExercises(),
-                builder: (context, snapshot) {
-                  if (snapshot.hasData) {
-                    final data = snapshot.data as List<Exercise>;
-                    return ListView.builder(
-                      itemCount: data.length,
-                      itemBuilder: (context, index) {
-                        final exercise = data[index];
-                        return Card(
-                          elevation: 5,
-                          child: ListTile(
-                            title: Text(exercise.name!),
-                            subtitle: Text(
-                                'ID: ${exercise.id}, calories: ${exercise.cal}'),
-                          ),
-                        );
-                      },
-                    );
-                  } else {
-                    return CircularProgressIndicator();
-                  }
-                });
-          },
-        ),
-      ),
+      // body: Center(
+      //   child: Consumer<DatabaseRepository>(
+      //     builder: (context, dbr, child) {
+      //       return FutureBuilder(
+      //           future: dbr.findAllExercises(),
+      //           builder: (context, snapshot) {
+      //             if (snapshot.hasData) {
+      //               final data = snapshot.data as List<Exercise>;
+      //               return ListView.builder(
+      //                 itemCount: data.length,
+      //                 itemBuilder: (context, index) {
+      //                   final exercise = data[index];
+      //                   return Card(
+      //                     elevation: 5,
+      //                     child: ListTile(
+      //                       title: Text(exercise.name!),
+      //                       subtitle: Text(
+      //                           'ID: ${exercise.id}, calories: ${exercise.cal}'),
+      //                     ),
+      //                   );
+      //                 },
+      //               );
+      //             } else {
+      //               return CircularProgressIndicator();
+      //             }
+      //           });
+      //     },
+      //   ),
+      // ),
       floatingActionButton: FloatingActionButton(onPressed: () {
         Navigator.pop(context);
       }),
