@@ -35,48 +35,69 @@ class ImpactPage extends StatelessWidget {
   Widget build(BuildContext context) {
     _authorize();
     return Scaffold(
+      appBar: AppBar(title: Text('fetch data'), actions: [
+        IconButton(
+            onPressed: () async {
+              act1 = await _requestData();
+              l = act1!.length;
+              print(act1);
+              print(l);
+              print(act1?[0].activityName);
+            },
+            icon: Icon(Icons.get_app)),
+        IconButton(
+            onPressed: () async {
+              for (var i = 0; i < l; i++) {
+                await Provider.of<DatabaseRepository>(context, listen: false)
+                    .insertExercises(Exercise(
+                        null,
+                        act1?[i].activityName,
+                        act1?[i].calories,
+                        act1?[i].distance,
+                        act1?[i].distanceUnit,
+                        act1?[i].date));
+              }
+              print('data added');
+            },
+            icon: Icon(Icons.save)),
+        IconButton(
+            onPressed: () async {
+              await Provider.of<DatabaseRepository>(context, listen: false)
+                  .deleteExercises();
+              print('data removed');
+            },
+            icon: Icon(Icons.delete)),
+      ]),
+
+      // DISPLAY DATA WITH FUTURE BUILDER
+
       body: Center(
-        child: Padding(
-          padding: const EdgeInsets.only(top: 100),
-          child: Column(
-            children: [
-              ElevatedButton(
-                child: Text('get data'),
-                onPressed: () async {
-                  act1 = await _requestData();
-                  l = act1!.length;
-                  print(act1);
-                  print(l);
-                  print(act1?[0].activityName);
-                },
-              ),
-              ElevatedButton(
-                child: Text('save this week data inside db'),
-                onPressed: () async {
-                  for (var i = 0; i < l; i++) {
-                    await Provider.of<DatabaseRepository>(context,
-                            listen: false)
-                        .insertExercises(Exercise(
-                            null,
-                            act1?[i].activityName,
-                            act1?[i].calories,
-                            act1?[i].distance,
-                            act1?[i].distanceUnit,
-                            act1?[i].date));
+        child: Consumer<DatabaseRepository>(
+          builder: (context, dbr, child) {
+            return FutureBuilder(
+                future: dbr.findAllExercises(),
+                builder: (context, snapshot) {
+                  if (snapshot.hasData) {
+                    final data = snapshot.data as List<Exercise>;
+                    return ListView.builder(
+                      itemCount: data.length,
+                      itemBuilder: (context, index) {
+                        final exercise = data[index];
+                        return Card(
+                          elevation: 5,
+                          child: ListTile(
+                            title: Text(exercise.name!),
+                            subtitle: Text(
+                                'ID: ${exercise.id}, calories: ${exercise.cal}'),
+                          ),
+                        );
+                      },
+                    );
+                  } else {
+                    return CircularProgressIndicator();
                   }
-                  print('data added');
-                },
-              ),
-              ElevatedButton(
-                child: Text('remove data from db'),
-                onPressed: () async {
-                  await Provider.of<DatabaseRepository>(context, listen: false)
-                      .deleteExercises();
-                  print('data removed');
-                },
-              ),
-            ],
-          ),
+                });
+          },
         ),
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
