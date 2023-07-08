@@ -61,7 +61,7 @@ class _$AppDatabase extends AppDatabase {
     changeListener = listener ?? StreamController<String>.broadcast();
   }
 
-  ExercisesDao? _exercisesDaoInstance;
+  ExerciseDao? _exerciseDaoInstance;
 
   Future<sqflite.Database> open(
     String path,
@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `ExercisesTable` (`dist` INTEGER PRIMARY KEY AUTOINCREMENT, `activity` TEXT NOT NULL, `cal` INTEGER NOT NULL, `distunit` TEXT NOT NULL, `date` TEXT NOT NULL)');
+            'CREATE TABLE IF NOT EXISTS `Exercise` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `cal` INTEGER, `dist` REAL, `unit` TEXT, `date` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -94,35 +94,25 @@ class _$AppDatabase extends AppDatabase {
   }
 
   @override
-  ExercisesDao get exercisesDao {
-    return _exercisesDaoInstance ??= _$ExercisesDao(database, changeListener);
+  ExerciseDao get exerciseDao {
+    return _exerciseDaoInstance ??= _$ExerciseDao(database, changeListener);
   }
 }
 
-class _$ExercisesDao extends ExercisesDao {
-  _$ExercisesDao(
+class _$ExerciseDao extends ExerciseDao {
+  _$ExerciseDao(
     this.database,
     this.changeListener,
   )   : _queryAdapter = QueryAdapter(database),
-        _exercisesTableInsertionAdapter = InsertionAdapter(
+        _exerciseInsertionAdapter = InsertionAdapter(
             database,
-            'ExercisesTable',
-            (ExercisesTable item) => <String, Object?>{
-                  'dist': item.dist,
-                  'activity': item.activity,
+            'Exercise',
+            (Exercise item) => <String, Object?>{
+                  'id': item.id,
+                  'name': item.name,
                   'cal': item.cal,
-                  'distunit': item.distunit,
-                  'date': item.date
-                }),
-        _exercisesTableDeletionAdapter = DeletionAdapter(
-            database,
-            'ExercisesTable',
-            ['dist'],
-            (ExercisesTable item) => <String, Object?>{
                   'dist': item.dist,
-                  'activity': item.activity,
-                  'cal': item.cal,
-                  'distunit': item.distunit,
+                  'unit': item.unit,
                   'date': item.date
                 });
 
@@ -132,29 +122,27 @@ class _$ExercisesDao extends ExercisesDao {
 
   final QueryAdapter _queryAdapter;
 
-  final InsertionAdapter<ExercisesTable> _exercisesTableInsertionAdapter;
-
-  final DeletionAdapter<ExercisesTable> _exercisesTableDeletionAdapter;
+  final InsertionAdapter<Exercise> _exerciseInsertionAdapter;
 
   @override
-  Future<List<ExercisesTable>> findAllExercises() async {
-    return _queryAdapter.queryList('SELECT * FROM ExercisesTable',
-        mapper: (Map<String, Object?> row) => ExercisesTable(
-            row['dist'] as int?,
-            row['activity'] as String,
-            row['cal'] as int,
-            row['distunit'] as String,
-            row['date'] as String));
+  Future<List<Exercise>> findAllExercises() async {
+    return _queryAdapter.queryList('SELECT * FROM Exercise',
+        mapper: (Map<String, Object?> row) => Exercise(
+            row['id'] as int?,
+            row['name'] as String?,
+            row['cal'] as int?,
+            row['dist'] as double?,
+            row['unit'] as String?,
+            row['date'] as String?));
   }
 
   @override
-  Future<void> insertExercises(ExercisesTable exercise) async {
-    await _exercisesTableInsertionAdapter.insert(
-        exercise, OnConflictStrategy.abort);
+  Future<void> deleteExercises() async {
+    await _queryAdapter.queryNoReturn('DELETE FROM Exercise');
   }
 
   @override
-  Future<void> deleteExercises(ExercisesTable task) async {
-    await _exercisesTableDeletionAdapter.delete(task);
+  Future<void> insertExercises(Exercise exercise) async {
+    await _exerciseInsertionAdapter.insert(exercise, OnConflictStrategy.abort);
   }
 }

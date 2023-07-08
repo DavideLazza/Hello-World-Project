@@ -2,12 +2,13 @@ import 'dart:async';
 import 'package:floor/floor.dart';
 import 'package:sqflite/sqflite.dart' as sqflite;
 
-import 'daos/exercisesDao.dart';
-import 'entities/exercisestable.dart';
+import 'entities/exercise.dart';
+
+import 'daos/exerciseDao.dart';
 
 part 'database.g.dart';
 
-@Database(version: 1, entities: [ExercisesTable])
+@Database(version: 1, entities: [Exercise])
 abstract class AppDatabase extends FloorDatabase {
-  ExercisesDao get exercisesDao;
+  ExerciseDao get exerciseDao;
 }

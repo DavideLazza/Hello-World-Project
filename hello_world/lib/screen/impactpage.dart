@@ -1,28 +1,83 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:floor/floor.dart';
 import 'package:flutter/material.dart';
-import 'package:hello_world/utils/exercise.dart';
+import 'package:hello_world/database/entities/exercise.dart';
+import 'package:hello_world/repository/databaseRepository.dart';
+
+// import 'package:hello_world/database/database.dart';
+// import 'package:hello_world/database/entities/exercise.dart';
+// import 'package:hello_world/repository/databaseRepository.dart';
+import 'package:hello_world/utils/activity.dart';
 
 import 'package:hello_world/utils/impact.dart';
 import 'package:http/http.dart' as http;
 import 'package:jwt_decoder/jwt_decoder.dart';
+import 'package:provider/provider.dart';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ImpactPage extends StatelessWidget {
-  const ImpactPage({super.key});
+  ImpactPage({super.key});
+
+  int l = 0;
+  List<Activity>? act1;
+
+  final act = Activity(
+      activityName: 'corsa',
+      calories: 300,
+      distance: 500,
+      distanceUnit: 'Km',
+      date: '2023-05-03');
 
   @override
   Widget build(BuildContext context) {
     _authorize();
     return Scaffold(
       body: Center(
-        child: ElevatedButton(
-            onPressed: () {
-              _requestData();
-            },
-            child: Text('ciao')),
+        child: Padding(
+          padding: const EdgeInsets.only(top: 100),
+          child: Column(
+            children: [
+              ElevatedButton(
+                child: Text('get data'),
+                onPressed: () async {
+                  act1 = await _requestData();
+                  l = act1!.length;
+                  print(act1);
+                  print(l);
+                  print(act1?[0].activityName);
+                },
+              ),
+              ElevatedButton(
+                child: Text('save this week data inside db'),
+                onPressed: () async {
+                  for (var i = 0; i < l; i++) {
+                    await Provider.of<DatabaseRepository>(context,
+                            listen: false)
+                        .insertExercises(Exercise(
+                            null,
+                            act1?[i].activityName,
+                            act1?[i].calories,
+                            act1?[i].distance,
+                            act1?[i].distanceUnit,
+                            act1?[i].date));
+                  }
+                  print('data added');
+                },
+              ),
+              ElevatedButton(
+                child: Text('remove data from db'),
+                onPressed: () async {
+                  await Provider.of<DatabaseRepository>(context, listen: false)
+                      .deleteExercises();
+                  print('data removed');
+                },
+              ),
+            ],
+          ),
+        ),
       ),
       floatingActionButton: FloatingActionButton(onPressed: () {
         Navigator.pop(context);
@@ -61,9 +116,9 @@ class ImpactPage extends StatelessWidget {
   } //_authorize
 
   //This method allows to obtain the JWT token pair from IMPACT and store it in SharedPreferences
-  Future<List<Exercise>?> _requestData() async {
+  Future<List<Activity>?> _requestData() async {
     //Initialize the result
-    List<Exercise>? exercises = [];
+    List<Activity>? activities = [];
 
     //Get the stored access token (Note that this code does not work if the tokens are null)
     final sp = await SharedPreferences.getInstance();
@@ -76,7 +131,12 @@ class ImpactPage extends StatelessWidget {
     } //if
 
     // ignore: prefer_interpolation_to_compose_strings
-    final urlExercises = Impact.baseUrl +
+    final urlprova = Impact.baseUrl +
+        Impact.exerciseEndpoint +
+        Impact.patientUsername +
+        '/day/2023-05-02';
+
+    final urlEx = Impact.baseUrl +
         Impact.exerciseEndpoint +
         Impact.patientUsername +
         Impact.dateRange;
@@ -84,23 +144,36 @@ class ImpactPage extends StatelessWidget {
     final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
 
     //Get the response
-    print('Calling: $urlExercises');
-    final response = await http.get(Uri.parse(urlExercises), headers: headers);
+    print('Calling: $urlEx');
+    final response = await http.get(Uri.parse(urlEx), headers: headers);
+    final responseprova = await http.get(Uri.parse(urlprova), headers: headers);
 
     //if OK parse the response, otherwise return null
     if (response.statusCode == 200) {
       final decodedResponse = jsonDecode(response.body);
+      final decodedResponseprova = jsonDecode(responseprova.body);
 
       // print(decodedResponse['data'].length);
       // print(decodedResponse['data'].length);
       // print(decodedResponse['data'][2]['data'].length);
-      // print(decodedResponse['data'][2]['data'][2]['activityName']);
+      // print(decodedResponseprova['data']['date'][0].runtimeType);
 
       //fare doppio ciclo for, uno per i data dello stesso giorno (come adesso) e uno per ciclare i giorni
 
+      // final exerciseDao = database.exerciseDao;
+      // var c = 0;
+
+      // final exercise = Exercise(
+      //     c++,
+      //     decodedResponseprova['data']['data'][0]['activityName'],
+      //     decodedResponseprova['data']['data'][0]['calories'],
+      //     decodedResponseprova['data']['data'][0]['distance'],
+      //     decodedResponseprova['data']['data'][0]['distanceUnit'],
+      //     decodedResponseprova['data']['date'][0]);
+
       for (var i = 0; i < decodedResponse['data'].length; i++) {
         for (var j = 0; j < decodedResponse['data'][i]['data'].length; j++) {
-          final exercise = Exercise(
+          final activity = Activity(
               activityName: decodedResponse['data'][i]['data'][j]
                   ['activityName'],
               calories: decodedResponse['data'][i]['data'][j]['calories'],
@@ -109,18 +182,45 @@ class ImpactPage extends StatelessWidget {
                   ['distanceUnit'],
               date: decodedResponse['data'][i]['date']);
 
-          exercises.add(exercise);
+          activities.add(activity);
         }
       }
+      return activities;
 
-      // print(exercises);
-      // print(exercises.length);
+      // activity: decodedResponse['data'][i]['data'][j]['activityName'],
+      // cal: decodedResponse['data'][i]['data'][j]['calories'],
+      // dist: decodedResponse['data'][i]['data'][j]['distance'],
+      // distunit: decodedResponse['data'][i]['data'][j]['distanceUnit'],
+      // date: decodedResponse['data'][i]['date']);
 
-      //for
+      // final prova = Exercise(1, 'corsa', 200, 8.53, 'Km', '2023-05-07');
+
+      // await exerciseDao.insertExercises(prova);
+      // null,
+      // decodedResponseprova['data']['data'][0]['activityName'],
+      // decodedResponseprova['data']['data'][0]['calories'],
+      // decodedResponseprova['data']['data'][0]['distance'],
+      // decodedResponseprova['data']['data'][0]['distanceUnit'],
+      // decodedResponseprova['data']['date'][0]));
+
+      // result = await exerciseDao.findAllExercises();
+
+      // activities.add(activity);
     } else {
       return null;
     }
-  } //_requestData
+  }
+
+  // return activities;
+
+  // print(exercises);
+  // print(exercises.length);
+
+  //for
+  //   } else {
+  //     return null;
+  //   }
+  // } //_requestData
 
 //This method allows to obtain the JWT token pair from IMPACT and store it in SharedPreferences
   Future<int> _refreshTokens() async {

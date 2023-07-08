@@ -1,11 +1,11 @@
-class Exercise {
+class Activity {
   final String? activityName;
   final int? calories;
   final double? distance;
   final String? distanceUnit;
   final String? date;
 
-  Exercise(
+  Activity(
       {required this.activityName,
       required this.calories,
       required this.distance,
@@ -14,6 +14,6 @@ class Exercise {
 
   @override
   String toString() {
-    return 'attività: $activityName, calories: $calories, distance: $distance, distanceUnit: $distanceUnit, date: $date';
+    return 'activityName: $activityName, calories: $calories, distance: $distance, distanceUnit: $distanceUnit, date: $date';
   }
 }
