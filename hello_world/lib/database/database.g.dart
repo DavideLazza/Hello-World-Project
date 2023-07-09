@@ -85,7 +85,7 @@ class _$AppDatabase extends AppDatabase {
       },
       onCreate: (database, version) async {
         await database.execute(
-            'CREATE TABLE IF NOT EXISTS `Exercise` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `cal` INTEGER, `dist` REAL, `unit` TEXT, `date` TEXT)');
+            'CREATE TABLE IF NOT EXISTS `Exercise` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `name` TEXT, `cal` INTEGER, `dist` REAL, `unit` TEXT, `avgHR` INTEGER, `speed` REAL, `duration` REAL, `date` TEXT)');
 
         await callback?.onCreate?.call(database, version);
       },
@@ -113,6 +113,9 @@ class _$ExerciseDao extends ExerciseDao {
                   'cal': item.cal,
                   'dist': item.dist,
                   'unit': item.unit,
+                  'avgHR': item.avgHR,
+                  'speed': item.speed,
+                  'duration': item.duration,
                   'date': item.date
                 });
 
@@ -133,6 +136,9 @@ class _$ExerciseDao extends ExerciseDao {
             row['cal'] as int?,
             row['dist'] as double?,
             row['unit'] as String?,
+            row['avgHR'] as int?,
+            row['speed'] as double?,
+            row['duration'] as double?,
             row['date'] as String?));
   }
 

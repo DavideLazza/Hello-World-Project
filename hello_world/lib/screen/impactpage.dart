@@ -17,18 +17,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ImpactPage extends StatelessWidget {
   ImpactPage({super.key});
 
-  List<String> weekdata = [];
-  String? selectedValue;
-
   int l = 0;
   List<Activity>? act1;
-
-  final act = Activity(
-      activityName: 'corsa',
-      calories: 300,
-      distance: 500,
-      distanceUnit: 'Km',
-      date: '2023-05-03');
 
   @override
   Widget build(BuildContext context) {
@@ -54,9 +44,10 @@ class ImpactPage extends StatelessWidget {
                         act1?[i].calories,
                         act1?[i].distance,
                         act1?[i].distanceUnit,
+                        act1?[i].avgHR,
+                        act1?[i].speed,
+                        act1?[i].duration,
                         act1?[i].date));
-
-                weekdata.add(act1![i].date!);
               }
               print('data added');
             },
@@ -143,6 +134,7 @@ class ImpactPage extends StatelessWidget {
   Future<List<Activity>?> _requestData() async {
     //Initialize the result
     List<Activity>? activities = [];
+    // List<Hrzone>? hrzones = [];
 
     //Get the stored access token (Note that this code does not work if the tokens are null)
     final sp = await SharedPreferences.getInstance();
@@ -180,7 +172,8 @@ class ImpactPage extends StatelessWidget {
       // print(decodedResponse['data'].length);
       // print(decodedResponse['data'].length);
       // print(decodedResponse['data'][2]['data'].length);
-      // print(decodedResponseprova['data']['date'][0].runtimeType);
+      // print(
+      //     decodedResponseprova['data']['data'][0]['heartRateZones'][0]['name']);
 
       //fare doppio ciclo for, uno per i data dello stesso giorno (come adesso) e uno per ciclare i giorni
 
@@ -204,7 +197,13 @@ class ImpactPage extends StatelessWidget {
               distance: decodedResponse['data'][i]['data'][j]['distance'],
               distanceUnit: decodedResponse['data'][i]['data'][j]
                   ['distanceUnit'],
+              avgHR: decodedResponse['data'][i]['data'][j]['averageHeartRate'],
+              speed: decodedResponse['data'][i]['data'][j]['speed'],
+              duration: decodedResponse['data'][i]['data'][j]['activeDuration'],
               date: decodedResponse['data'][i]['date']);
+
+          // final hrzone = Hrzone(activityName: decodedResponse['data'][i]['data'][j]
+          //         ['activityName'], heartRateZone: decodedResponse['data'][i]['data'][j]['heartRateZones'][], minute: minute, speed: speed)
 
           activities.add(activity);
         }

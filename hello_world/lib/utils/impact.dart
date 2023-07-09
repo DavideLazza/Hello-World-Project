@@ -6,8 +6,8 @@ class Impact {
 
   static String exerciseEndpoint = 'data/v1/exercise/patients/';
 
-  static String startDate = '2023-05-01';
-  static String endDate = '2023-05-07';
+  static String startDate = '2023-06-09';
+  static String endDate = '2023-06-16';
 
   static String dateRange =
       '/daterange/start_date/$startDate/end_date/$endDate/';

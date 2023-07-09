@@ -13,8 +13,12 @@ class Exercise {
   final int? cal;
   final double? dist;
   final String? unit;
+  final int? avgHR;
+  final double? speed;
+  final double? duration;
   final String? date;
 
   //Default constructor
-  Exercise(this.id, this.name, this.cal, this.dist, this.unit, this.date);
+  Exercise(this.id, this.name, this.cal, this.dist, this.unit, this.avgHR,
+      this.speed, this.duration, this.date);
 }
