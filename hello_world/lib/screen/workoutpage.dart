@@ -152,7 +152,7 @@ class WorkoutPage extends StatelessWidget {
                                                 ]
                                               : [
                                                   Text(
-                                                      '${(exercise.speed)?.round()}',
+                                                      '${double.parse(exercise.speed!.toStringAsFixed(2))}',
                                                       style: const TextStyle(
                                                           fontSize: 40)),
                                                   const Text(
@@ -220,7 +220,7 @@ class WorkoutPage extends StatelessWidget {
                                                     ]
                                                   : [
                                                       Text(
-                                                          '${(exercise.dist)?.round()}',
+                                                          '${double.parse(exercise.dist!.toStringAsFixed(2))}',
                                                           style:
                                                               const TextStyle(
                                                                   fontSize:

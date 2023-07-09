@@ -167,7 +167,7 @@ class HomePage extends StatelessWidget {
                                     const Text('Km covered',
                                         style: TextStyle(fontSize: 15)),
                                     Text(
-                                      '${data.round()}',
+                                      '${double.parse(data.toStringAsFixed(2))}', //data
                                       style: TextStyle(fontSize: 40),
                                     )
                                   ],
