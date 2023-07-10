@@ -3,6 +3,7 @@ import 'dart:ffi';
 import 'package:flutter/material.dart';
 
 import 'package:hello_world/repository/databaseRepository.dart';
+import 'package:hello_world/screen/advicepage.dart';
 import 'package:hello_world/screen/impactpage.dart';
 import 'package:hello_world/screen/profilepage.dart';
 import 'package:hello_world/screen/welcomepage.dart';
@@ -52,17 +53,10 @@ class HomePage extends StatelessWidget {
         centerTitle: true,
         actions: [
           IconButton(
-            icon: Icon(Icons.analytics_outlined),
+            icon: const Icon(Icons.analytics_outlined),
             onPressed: () {
               Navigator.of(context)
                   .push(MaterialPageRoute(builder: (context) => ImpactPage()));
-            },
-          ),
-          IconButton(
-            icon: Icon(Icons.video_library_outlined),
-            onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => WorkoutPage()));
             },
           ),
           IconButton(
@@ -75,13 +69,13 @@ class HomePage extends StatelessWidget {
         ],
       ),
       body: Padding(
-        padding: const EdgeInsets.only(top: 30, left: 30, right: 30),
+        padding: const EdgeInsets.only(top: 20, left: 30, right: 30),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Welcome $presname,',
+              'Welcome $presname',
               style: const TextStyle(
                 color: Colors.blueGrey,
                 fontSize: 32,
@@ -97,10 +91,8 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const SizedBox(
-              height: 50,
+              height: 30,
             ),
-
-            // FUTURE BUILDER DAI CHE 'NDEMO
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -112,35 +104,46 @@ class HomePage extends StatelessWidget {
                           final data = snapshot.data as int;
                           if (data != 0) {
                             return Card(
+                              clipBehavior: Clip.hardEdge,
                               color: Colors.blueGrey,
                               elevation: 5,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(20)),
-                              child: SizedBox(
-                                height: 150,
-                                width: 150,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(20),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    children: [
-                                      const Text('N° of exercises done',
-                                          style: TextStyle(fontSize: 15)),
-                                      Text(
-                                        '$data',
-                                        style: TextStyle(fontSize: 40),
-                                      )
-                                    ],
+                              child: InkWell(
+                                splashColor: Colors.white,
+                                onTap: () {
+                                  Navigator.of(context).push(MaterialPageRoute(
+                                      builder: (context) => WorkoutPage()));
+                                },
+                                child: SizedBox(
+                                  height: 150,
+                                  width: 150,
+                                  child: Padding(
+                                    padding: const EdgeInsets.all(20),
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        const Text('N° of exercises done',
+                                            style: TextStyle(fontSize: 15)),
+                                        Text(
+                                          '$data',
+                                          style: TextStyle(fontSize: 40),
+                                        )
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
                             );
                           } else {
-                            return CircularProgressIndicator();
+                            return const CircularProgressIndicator(
+                                color: Colors.transparent);
                           }
                         } else {
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator(
+                            color: Colors.transparent,
+                          );
                         }
                       });
                 }),
@@ -176,7 +179,9 @@ class HomePage extends StatelessWidget {
                             ),
                           );
                         } else {
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator(
+                            color: Colors.transparent,
+                          );
                         }
                       });
                 }),
@@ -185,7 +190,6 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -221,7 +225,9 @@ class HomePage extends StatelessWidget {
                             ),
                           );
                         } else {
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator(
+                            color: Colors.transparent,
+                          );
                         }
                       });
                 }),
@@ -257,7 +263,9 @@ class HomePage extends StatelessWidget {
                             ),
                           );
                         } else {
-                          return CircularProgressIndicator();
+                          return const CircularProgressIndicator(
+                            color: Colors.transparent,
+                          );
                         }
                       });
                 }),
@@ -266,29 +274,61 @@ class HomePage extends StatelessWidget {
             const SizedBox(
               height: 5,
             ),
-            Card(
-              color: Colors.greenAccent.shade100,
-              elevation: 5,
-              shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20)),
-              child: const SizedBox(
-                height: 150,
-                width: 316,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text('CO2 saved', style: TextStyle(fontSize: 15)),
-                      Text(
-                        '300',
-                        style: TextStyle(fontSize: 40),
-                      )
-                    ],
-                  ),
-                ),
-              ),
-            )
+            Consumer<DatabaseRepository>(builder: (context, dbr, child) {
+              return FutureBuilder(
+                  future: dbr.getTotalKm(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData) {
+                      final data = snapshot.data as double;
+                      final co2 = data / 10;
+                      return Card(
+                        clipBehavior: Clip.hardEdge,
+                        color: Colors.blueGrey.shade800,
+                        elevation: 5,
+                        shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(20)),
+                        child: InkWell(
+                          splashColor: Colors.white,
+                          onTap: () {
+                            Navigator.of(context).push(MaterialPageRoute(
+                                builder: (context) => AdvicePage()));
+                          },
+                          child: SizedBox(
+                            height: 150,
+                            width: 316,
+                            child: Padding(
+                              padding: const EdgeInsets.all(20),
+                              child: Column(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  const Text('CO2 saved (Kg)',
+                                      style: TextStyle(
+                                          fontSize: 15, color: Colors.white)),
+                                  Text(
+                                    '${double.parse(co2.toStringAsFixed(2))}',
+                                    style: const TextStyle(
+                                        fontSize: 40, color: Colors.white),
+                                  )
+                                ],
+                              ),
+                            ),
+                          ),
+                        ),
+                      );
+                    } else {
+                      return const Row(
+                        children: [
+                          Text(
+                            'No data available, get them from',
+                            style: TextStyle(fontSize: 17),
+                          ),
+                          Icon(Icons.analytics_outlined)
+                        ],
+                      );
+                    }
+                  });
+            })
           ],
         ),
       ),

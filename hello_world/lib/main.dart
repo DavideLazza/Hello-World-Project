@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/database/database.dart';
 import 'package:hello_world/repository/databaseRepository.dart';
-// import 'package:hello_world/database/database.dart';
-// import 'package:hello_world/repository/databaseRepository.dart';
 import 'package:hello_world/screen/loginpage.dart';
 import 'package:provider/provider.dart';
 
@@ -29,8 +27,11 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       theme: ThemeData(
           primarySwatch: Colors.blueGrey,
-          textTheme:
-              const TextTheme(bodyMedium: TextStyle(fontFamily: "Poppins"))),
+          textTheme: const TextTheme(
+              bodyMedium: TextStyle(fontFamily: "Poppins"),
+              labelLarge: TextStyle(
+                fontFamily: "Poppins",
+              ))),
       home: const LoginPage(),
     );
   }

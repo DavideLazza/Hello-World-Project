@@ -13,14 +13,13 @@ class ProfilePage extends StatelessWidget {
       age = "",
       gender = "";
 
-  ProfilePage({
-    required this.name,
-    required this.surname,
-    required this.height,
-    required this.weight,
-    required this.age,
-    required this.gender,
-  });
+  ProfilePage(
+      {required this.name,
+      required this.surname,
+      required this.height,
+      required this.weight,
+      required this.age,
+      required this.gender});
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class ProfilePage extends StatelessWidget {
         body: Column(
           children: [
             const SizedBox(
-              height: 100,
+              height: 90,
             ),
             const Text(
               'User Profile',
@@ -51,7 +50,7 @@ class ProfilePage extends StatelessWidget {
                   color: Colors.white,
                 )),
             const SizedBox(
-              height: 80,
+              height: 60,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 40),
@@ -234,6 +233,9 @@ class ProfilePage extends StatelessWidget {
 void _toLoginPage(BuildContext context) async {
   final sp = await SharedPreferences.getInstance();
   sp.remove('username');
+
+  final profiledata = await SharedPreferences.getInstance();
+  profiledata.remove('first name');
 
   Navigator.of(context)
       .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/screen/profilepage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FormPage extends StatefulWidget {
   const FormPage({Key? key}) : super(key: key);
@@ -28,7 +29,9 @@ class _FormPageState extends State<FormPage> {
         child: Column(
           children: [
             TextField(
-              onChanged: (text) {
+              // HO AGGIUNTO ASYNC
+
+              onChanged: (text) async {
                 setState(() {
                   fName = text;
                 });
@@ -114,12 +117,13 @@ class _FormPageState extends State<FormPage> {
         onPressed: () {
           Navigator.of(context).push(MaterialPageRoute(
               builder: (context) => ProfilePage(
-                  name: fName,
-                  surname: lName,
-                  height: height,
-                  weight: weight,
-                  age: age,
-                  gender: gender)));
+                    name: fName,
+                    surname: lName,
+                    height: height,
+                    weight: weight,
+                    age: age,
+                    gender: gender,
+                  )));
         },
         child: const Icon(
           Icons.check,
