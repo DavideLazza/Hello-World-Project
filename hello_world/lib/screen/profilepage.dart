@@ -50,7 +50,7 @@ class ProfilePage extends StatelessWidget {
                   color: Colors.white,
                 )),
             const SizedBox(
-              height: 60,
+              height: 40,
             ),
             Padding(
               padding: const EdgeInsets.only(left: 40),
@@ -190,7 +190,7 @@ class ProfilePage extends StatelessWidget {
                   ],
                 )),
             const SizedBox(
-              height: 65,
+              height: 50,
             ),
             ElevatedButton(
               onPressed: () {

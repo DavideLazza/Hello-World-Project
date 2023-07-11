@@ -1,11 +1,13 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:hello_world/provider/kilometerdone.dart';
 
 import 'package:hello_world/repository/databaseRepository.dart';
 import 'package:hello_world/screen/advicepage.dart';
 import 'package:hello_world/screen/impactpage.dart';
 import 'package:hello_world/screen/profilepage.dart';
+import 'package:hello_world/screen/routepage.dart';
 import 'package:hello_world/screen/welcomepage.dart';
 import 'package:hello_world/screen/workoutpage.dart';
 import 'package:provider/provider.dart';
@@ -128,7 +130,7 @@ class HomePage extends StatelessWidget {
                                             style: TextStyle(fontSize: 15)),
                                         Text(
                                           '$data',
-                                          style: TextStyle(fontSize: 40),
+                                          style: const TextStyle(fontSize: 40),
                                         )
                                       ],
                                     ),
@@ -153,27 +155,35 @@ class HomePage extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           final data = snapshot.data as double;
+                          context.read<KilometerDone>().setKmDone(data.round());
                           return Card(
                             color: Colors.blueGrey.shade300,
                             elevation: 5,
                             shape: RoundedRectangleBorder(
                                 borderRadius: BorderRadius.circular(20)),
-                            child: SizedBox(
-                              height: 150,
-                              width: 150,
-                              child: Padding(
-                                padding: const EdgeInsets.all(20),
-                                child: Column(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    const Text('Km covered',
-                                        style: TextStyle(fontSize: 15)),
-                                    Text(
-                                      '${double.parse(data.toStringAsFixed(2))}', //data
-                                      style: TextStyle(fontSize: 40),
-                                    )
-                                  ],
+                            child: InkWell(
+                              splashColor: Colors.white,
+                              onTap: () {
+                                Navigator.of(context).push(MaterialPageRoute(
+                                    builder: (context) => RoutePage()));
+                              },
+                              child: SizedBox(
+                                height: 150,
+                                width: 150,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(20),
+                                  child: Column(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      const Text('Km covered',
+                                          style: TextStyle(fontSize: 15)),
+                                      Text(
+                                        '${double.parse(data.toStringAsFixed(2))}', //data
+                                        style: TextStyle(fontSize: 40),
+                                      )
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),

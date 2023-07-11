@@ -70,7 +70,7 @@ class _LoginPageState extends State<LoginPage> {
         _toWelcomePage(context);
       },
       messages: LoginMessages(
-        flushbarTitleError: "Successful",
+        flushbarTitleError: "",
         userHint: "User ID / email",
       ),
       theme: LoginTheme(

@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hello_world/database/database.dart';
+import 'package:hello_world/provider/kilometerdone.dart';
+import 'package:hello_world/provider/kilometergoal.dart';
 import 'package:hello_world/repository/databaseRepository.dart';
 import 'package:hello_world/screen/loginpage.dart';
 import 'package:provider/provider.dart';
@@ -12,8 +14,15 @@ Future<void> main() async {
 
   final databaseRepository = DatabaseRepository(database: database);
 
-  runApp(ChangeNotifierProvider<DatabaseRepository>(
-    create: (context) => databaseRepository,
+// VERIFICARE FUNZIONI, AGGIUNTO MULTIPROVIDER E CHANGENOTIFIERPROVIDER KILOMETER()
+
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider<DatabaseRepository>(
+          create: (context) => databaseRepository),
+      ChangeNotifierProvider(create: (_) => KilometerGoal()),
+      ChangeNotifierProvider(create: (_) => KilometerDone())
+    ],
     child: MyApp(),
   ));
 }
