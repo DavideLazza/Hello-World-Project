@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
 
 class Intro3 extends StatelessWidget {
+  const Intro3({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
-        padding: const EdgeInsets.only(top: 100),
-        child: Column(
+        color: Colors.blueGrey,
+        padding: const EdgeInsets.only(top: 300),
+        child: const Column(
           children: [
-            Image.asset(
-              'images/milan.png',
-              height: 250,
+            Text(
+              'MY GOAL',
+              style: TextStyle(
+                  fontWeight: FontWeight.bold,
+                  fontSize: 25,
+                  color: Colors.white),
             ),
-            const SizedBox(height: 50),
-            const Text(
-              'ALLA FINE VINCE SEMPRE IL MILAN',
-              textAlign: TextAlign.center,
-              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 25),
-            ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.fromLTRB(45, 20, 45, 15),
               child: Text(
-                'Nella notte di Istanbul il Manchester City vince la sua prima Champions League battendo un\'inter mai doma, che avrebbe meritato almeno di andare ai supplementari',
-                textAlign: TextAlign.justify,
-                style: TextStyle(fontSize: 17),
+                'This app aims to encourage people to achieve their fitness goals in a sustainable way, discovering local areas, their products and culture',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 17, color: Colors.white),
               ),
             ),
           ],
