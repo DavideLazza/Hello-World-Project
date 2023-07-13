@@ -244,7 +244,7 @@ class WorkoutPage extends StatelessWidget {
                         );
                       });
                 } else {
-                  return CircularProgressIndicator();
+                  return const CircularProgressIndicator();
                 }
               });
         }));

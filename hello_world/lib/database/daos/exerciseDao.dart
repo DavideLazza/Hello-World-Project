@@ -15,6 +15,9 @@ abstract class ExerciseDao {
   @Query('SELECT SUM(dist) FROM Exercise')
   Future<double?> getTotalKm();
 
+  @Query('SELECT COUNT(DISTINCT date) FROM Exercise')
+  Future<int?> getTotalDate();
+
   @insert
   Future<void> insertExercises(Exercise exercise);
 

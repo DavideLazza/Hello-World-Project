@@ -33,8 +33,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Future<String> _loginUser(LoginData data) async {
-    if ( //data.name == 'davide@unipd.com' && data.password == 'Password1' ||
-        data.name == userid && data.password == psw) {
+    if (data.name == userid && data.password == psw) {
       final sp = await SharedPreferences.getInstance();
       sp.setString('username', data.name);
 
@@ -47,8 +46,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<String> _signUpUser(SignupData data) async {
     userid = data.name!;
     psw = data.password!;
-    return 'you can now logging in';
-    //return 'To be implemented';
+    return 'you can now log in';
   } // _signUpUser
 
   Future<String> _recoverPassword(String email) async {
@@ -70,6 +68,7 @@ class _LoginPageState extends State<LoginPage> {
         _toWelcomePage(context);
       },
       messages: LoginMessages(
+        recoverPasswordDescription: 'We will send your password in this page',
         flushbarTitleError: "",
         userHint: "User ID / email",
       ),

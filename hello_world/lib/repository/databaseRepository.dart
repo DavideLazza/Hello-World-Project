@@ -30,6 +30,11 @@ class DatabaseRepository extends ChangeNotifier {
     return result;
   }
 
+  Future<int?> getTotalDate() async {
+    final result = await database.exerciseDao.getTotalDate();
+    return result;
+  }
+
   //This method wraps the insertTodo() method of the DAO.
   //Then, it notifies the listeners that something changed.
   Future<void> insertExercises(Exercise x) async {

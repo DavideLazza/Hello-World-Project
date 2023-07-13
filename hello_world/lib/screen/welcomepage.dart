@@ -30,7 +30,7 @@ class _WelcomePageState extends State<WelcomePage> {
                 isLastPage = index == 2;
               });
             },
-            children: [
+            children: const [
               Intro1(),
               Intro2(),
               Intro3(),

@@ -16,7 +16,7 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ImpactPage extends StatefulWidget {
-  ImpactPage({super.key});
+  const ImpactPage({super.key});
 
   @override
   State<ImpactPage> createState() => _ImpactPageState();
@@ -25,7 +25,7 @@ class ImpactPage extends StatefulWidget {
 class _ImpactPageState extends State<ImpactPage> {
   int l = 0;
 
-  TextEditingController dateController = TextEditingController();
+  TextEditingController dateController1 = TextEditingController();
   TextEditingController dateController2 = TextEditingController();
 
   List<Activity>? act1;
@@ -33,7 +33,7 @@ class _ImpactPageState extends State<ImpactPage> {
   @override
   void initState() {
     super.initState();
-    dateController.text = '';
+    dateController1.text = '';
     dateController2.text = '';
   }
 
@@ -41,7 +41,6 @@ class _ImpactPageState extends State<ImpactPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(),
-
       body: Container(
         padding: const EdgeInsets.all(30),
         child: Center(
@@ -66,7 +65,7 @@ class _ImpactPageState extends State<ImpactPage> {
               height: 50,
             ),
             TextField(
-              controller: dateController,
+              controller: dateController1,
               style: const TextStyle(
                   fontFamily: "Poppins", fontSize: 18, color: Colors.blueGrey),
               decoration: const InputDecoration(
@@ -82,14 +81,15 @@ class _ImpactPageState extends State<ImpactPage> {
                 DateTime? pickedStartDate = await showDatePicker(
                     context: context,
                     initialDate: DateTime.now(),
-                    firstDate: DateTime(2023, 2, 1),
-                    lastDate: DateTime(2023, 12, 31));
+                    firstDate: DateTime(2023, 2, 9),
+                    lastDate: DateTime.now());
                 if (pickedStartDate != null) {
+                  // ignore: non_constant_identifier_names
                   String StartDate =
                       DateFormat('yyyy-MM-dd').format(pickedStartDate);
                   print(StartDate);
                   setState(() {
-                    dateController.text = StartDate.toString();
+                    dateController1.text = StartDate.toString();
                   });
                 } else {
                   // ignore: use_build_context_synchronously
@@ -115,31 +115,30 @@ class _ImpactPageState extends State<ImpactPage> {
                 DateTime? pickedEndDate = await showDatePicker(
                     context: context,
                     initialDate: DateTime(
-                        int.parse(dateController.text.substring(0, 4)),
-                        int.parse(dateController.text.substring(5, 7)),
-                        int.parse(dateController.text.substring(8, 10))),
+                        int.parse(dateController1.text.substring(0, 4)),
+                        int.parse(dateController1.text.substring(5, 7)),
+                        int.parse(dateController1.text.substring(8, 10))),
                     firstDate: DateTime(
-                        int.parse(dateController.text.substring(0, 4)),
-                        int.parse(dateController.text.substring(5, 7)),
-                        int.parse(dateController.text.substring(8, 10))),
-                    lastDate: int.parse(dateController.text.substring(8, 10)) +
+                        int.parse(dateController1.text.substring(0, 4)),
+                        int.parse(dateController1.text.substring(5, 7)),
+                        int.parse(dateController1.text.substring(8, 10))),
+                    lastDate: int.parse(dateController1.text.substring(8, 10)) +
                                 7 <
                             x
                         ? DateTime(
-                            int.parse(dateController.text.substring(0, 4)),
-                            int.parse(dateController.text.substring(5, 7)),
-                            int.parse(dateController.text.substring(8, 10)) + 7)
+                            int.parse(dateController1.text.substring(0, 4)),
+                            int.parse(dateController1.text.substring(5, 7)),
+                            int.parse(dateController1.text.substring(8, 10)) +
+                                7)
                         : DateTime(
-                            int.parse(dateController.text.substring(0, 4)),
-                            int.parse(dateController.text.substring(5, 7)),
+                            int.parse(dateController1.text.substring(0, 4)),
+                            int.parse(dateController1.text.substring(5, 7)),
                             DateTime.now().day));
                 if (pickedEndDate != null) {
+                  // ignore: non_constant_identifier_names
                   String EndDate =
                       DateFormat('yyyy-MM-dd').format(pickedEndDate);
-
-                  //DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
                   print(EndDate);
-
                   setState(
                     () {
                       dateController2.text = EndDate.toString();
@@ -166,13 +165,12 @@ class _ImpactPageState extends State<ImpactPage> {
                 ElevatedButton(
                     onPressed: () async {
                       act1 = await _requestData(
-                          dateController.text, dateController2.text);
+                          dateController1.text, dateController2.text);
                       l = act1!.length;
 
                       // DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
                       print(act1);
-                      print(l);
-                      print(act1?[0].activityName);
+                      print('Number of exercises: $l');
                     },
                     child: const Text(
                       'Get data',
@@ -193,9 +191,6 @@ class _ImpactPageState extends State<ImpactPage> {
                                 act1?[i].duration,
                                 act1?[i].date));
                       }
-
-                      //DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
-
                       print('data added');
                     },
                     child: const Text('Save data')),
@@ -204,9 +199,6 @@ class _ImpactPageState extends State<ImpactPage> {
                       await Provider.of<DatabaseRepository>(context,
                               listen: false)
                           .deleteExercises();
-
-                      //DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
-
                       print('data removed');
                     },
                     child: const Text('Delete data'))
@@ -215,45 +207,11 @@ class _ImpactPageState extends State<ImpactPage> {
           ],
         )),
       ),
-
-      // NEW DISPLAY
-
-      // DISPLAY DATA WITH FUTURE BUILDER
-
-      // body: Center(
-      //   child: Consumer<DatabaseRepository>(
-      //     builder: (context, dbr, child) {
-      //       return FutureBuilder(
-      //           future: dbr.findAllExercises(),
-      //           builder: (context, snapshot) {
-      //             if (snapshot.hasData) {
-      //               final data = snapshot.data as List<Exercise>;
-      //               return ListView.builder(
-      //                 itemCount: data.length,
-      //                 itemBuilder: (context, index) {
-      //                   final exercise = data[index];
-      //                   return Card(
-      //                     elevation: 5,
-      //                     child: ListTile(
-      //                       title: Text(exercise.name!),
-      //                       subtitle: Text(
-      //                           'ID: ${exercise.id}, calories: ${exercise.cal}'),
-      //                     ),
-      //                   );
-      //                 },
-      //               );
-      //             } else {
-      //               return CircularProgressIndicator();
-      //             }
-      //           });
-      //     },
-      //   ),
-      // ),
     );
   }
 
   //build
-  Future<int?> _authorize() async {
+  Future<void> _authorize() async {
     //check if the IMPACT backend is up
     final urlisup = Impact.baseUrl + Impact.pingEndpoint;
     final responseisup = await http.get(Uri.parse(urlisup));
@@ -261,8 +219,8 @@ class _ImpactPageState extends State<ImpactPage> {
     if (responseisup.statusCode == 200) {
       print('Impact backend is up');
     }
-    //Create the request
 
+    //Create the request
     final url = Impact.baseUrl + Impact.tokenEndpoint;
     final body = {'username': Impact.username, 'password': Impact.password};
 
@@ -276,10 +234,8 @@ class _ImpactPageState extends State<ImpactPage> {
       final sp = await SharedPreferences.getInstance();
       sp.setString('access', decodedResponse['access']);
       sp.setString('refresh', decodedResponse['refresh']);
+      print('Response code: ${response.statusCode}');
     } //if
-
-    //Just return the status code
-    return response.statusCode;
   }
 
   //_authorize
@@ -306,6 +262,7 @@ class _ImpactPageState extends State<ImpactPage> {
           '/day/$startDate/';
 
       final headers = {HttpHeaders.authorizationHeader: 'Bearer $access'};
+
       print('Calling: $urlEx');
       final response = await http.get(Uri.parse(urlEx), headers: headers);
 
@@ -372,7 +329,6 @@ class _ImpactPageState extends State<ImpactPage> {
     }
   }
 
-  // return activities;
   Future<int> _refreshTokens() async {
     //Create the request
     final url = Impact.baseUrl + Impact.refreshEndpoint;

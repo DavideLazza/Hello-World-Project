@@ -161,6 +161,12 @@ class _$ExerciseDao extends ExerciseDao {
   }
 
   @override
+  Future<int?> getTotalDate() async {
+    return _queryAdapter.query('SELECT COUNT(DISTINCT date) FROM Exercise',
+        mapper: (Map<String, Object?> row) => row.values.first as int);
+  }
+
+  @override
   Future<void> deleteExercises() async {
     await _queryAdapter.queryNoReturn('DELETE FROM Exercise');
   }

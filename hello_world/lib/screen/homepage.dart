@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:flutter/material.dart';
+import 'package:hello_world/database/daos/exerciseDao.dart';
 import 'package:hello_world/provider/kilometerdone.dart';
 
 import 'package:hello_world/repository/databaseRepository.dart';
@@ -12,6 +13,7 @@ import 'package:hello_world/screen/welcomepage.dart';
 import 'package:hello_world/screen/workoutpage.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class HomePage extends StatelessWidget {
   HomePage({
     Key? key,
@@ -85,7 +87,7 @@ class HomePage extends StatelessWidget {
               ),
             ),
             const Text(
-              'this is a recap of your week\'s activities',
+              'this is a recap of your activities',
               style: TextStyle(
                 color: Colors.blueGrey,
                 fontSize: 25,
@@ -157,6 +159,7 @@ class HomePage extends StatelessWidget {
                           final data = snapshot.data as double;
                           context.read<KilometerDone>().setKmDone(data.round());
                           return Card(
+                            clipBehavior: Clip.hardEdge,
                             color: Colors.blueGrey.shade300,
                             elevation: 5,
                             shape: RoundedRectangleBorder(
@@ -223,11 +226,11 @@ class HomePage extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text('Calories burnt',
+                                    const Text('Total calories burnt',
                                         style: TextStyle(fontSize: 15)),
                                     Text(
                                       '$data',
-                                      style: TextStyle(fontSize: 40),
+                                      style: const TextStyle(fontSize: 40),
                                     )
                                   ],
                                 ),
@@ -243,10 +246,12 @@ class HomePage extends StatelessWidget {
                 }),
                 Consumer<DatabaseRepository>(builder: (context, dbr, child) {
                   return FutureBuilder(
-                      future: dbr.getTotalCalories(),
+                      future: Future.wait(
+                          [dbr.getTotalCalories(), dbr.getTotalDate()]),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
-                          final data = snapshot.data as int;
+                          final data = snapshot.data?[0] as int;
+                          final x = snapshot.data?[1] as int;
                           return Card(
                             color: Colors.blueGrey.shade50,
                             elevation: 5,
@@ -261,11 +266,11 @@ class HomePage extends StatelessWidget {
                                   mainAxisAlignment:
                                       MainAxisAlignment.spaceBetween,
                                   children: [
-                                    const Text('Calories burnt per day',
+                                    const Text('Avg calories burnt per day',
                                         style: TextStyle(fontSize: 15)),
                                     Text(
-                                      '${(data / 7).round()}',
-                                      style: TextStyle(fontSize: 40),
+                                      '${(data / x).round()}',
+                                      style: const TextStyle(fontSize: 40),
                                     )
                                   ],
                                 ),

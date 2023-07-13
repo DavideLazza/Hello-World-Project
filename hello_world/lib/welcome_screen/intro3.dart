@@ -1,31 +1,27 @@
 import 'package:flutter/material.dart';
 
 class Intro3 extends StatelessWidget {
+  const Intro3({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Container(
         color: Colors.blueGrey,
-        padding: const EdgeInsets.only(top: 100),
-        child: Column(
+        padding: const EdgeInsets.only(top: 300),
+        child: const Column(
           children: [
-            Image.asset(
-              'images/aaa.png',
-              height: 300,
-            ),
-            const SizedBox(height: 50),
-            const Text(
+            Text(
               'MY GOAL',
-              textAlign: TextAlign.center,
               style: TextStyle(
                   fontWeight: FontWeight.bold,
                   fontSize: 25,
                   color: Colors.white),
             ),
-            const Padding(
+            Padding(
               padding: EdgeInsets.fromLTRB(45, 20, 45, 15),
               child: Text(
-                'This app wants to encourage people reaching their fitness goals in a sustainable way, discovering the local lands, their products and culture',
-                textAlign: TextAlign.justify,
+                'This app aims to encourage people to achieve their fitness goals in a sustainable way, discovering local areas, their products and culture',
+                textAlign: TextAlign.center,
                 style: TextStyle(fontSize: 17, color: Colors.white),
               ),
             ),

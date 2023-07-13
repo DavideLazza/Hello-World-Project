@@ -5,6 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'formpage.dart';
 import 'loginpage.dart';
 
+// ignore: must_be_immutable
 class ProfilePage extends StatelessWidget {
   String name = "",
       surname = "",
@@ -14,7 +15,8 @@ class ProfilePage extends StatelessWidget {
       gender = "";
 
   ProfilePage(
-      {required this.name,
+      {super.key,
+      required this.name,
       required this.surname,
       required this.height,
       required this.weight,
@@ -234,9 +236,10 @@ void _toLoginPage(BuildContext context) async {
   final sp = await SharedPreferences.getInstance();
   sp.remove('username');
 
-  final profiledata = await SharedPreferences.getInstance();
-  profiledata.remove('first name');
+  // final profiledata = await SharedPreferences.getInstance();
+  // profiledata.remove('first name');
 
-  Navigator.of(context)
-      .pushReplacement(MaterialPageRoute(builder: (context) => LoginPage()));
+  // ignore: use_build_context_synchronously
+  Navigator.of(context).pushReplacement(
+      MaterialPageRoute(builder: (context) => const LoginPage()));
 }

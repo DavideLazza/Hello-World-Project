@@ -31,8 +31,6 @@ class _FormPageState extends State<FormPage> {
         child: Column(
           children: [
             TextField(
-              // HO AGGIUNTO ASYNC
-
               onChanged: (text) {
                 setState(() {
                   fName = text;
@@ -124,7 +122,7 @@ class _FormPageState extends State<FormPage> {
               style: const TextStyle(
                   fontFamily: "Poppins", fontSize: 18, color: Colors.blueGrey),
               decoration: const InputDecoration(
-                  hintText: 'weekly goal (Km)',
+                  hintText: 'Activities goal (Km)',
                   hintStyle: TextStyle(color: Colors.black)),
             ),
           ],

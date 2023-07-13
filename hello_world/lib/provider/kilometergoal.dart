@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 
 class KilometerGoal with ChangeNotifier {
-  int km = 0;
+  int kmGoal = 0;
 
   void setKm(int a) {
-    km = a;
+    kmGoal = a;
     notifyListeners();
   }
 }

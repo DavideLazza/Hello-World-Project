@@ -4,7 +4,7 @@ import 'package:hello_world/provider/kilometergoal.dart';
 import 'package:provider/provider.dart';
 
 class AdvicePage extends StatelessWidget {
-  AdvicePage({super.key});
+  const AdvicePage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -15,8 +15,7 @@ class AdvicePage extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: Container(
-          child: Padding(
+      body: Padding(
         padding: const EdgeInsets.all(30),
         child: Column(
           children: [
@@ -32,14 +31,14 @@ class AdvicePage extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        'You achieved ${context.watch<KilometerDone>().kmDone}/${context.watch<KilometerGoal>().km} Km of your goal',
+                        'You achieved ${context.watch<KilometerDone>().kmDone}/${context.watch<KilometerGoal>().kmGoal} Km of your goal',
                         style: const TextStyle(fontSize: 20),
                       ),
                       const SizedBox(
                         height: 20,
                       ),
                       context.watch<KilometerDone>().kmDone >=
-                              context.watch<KilometerGoal>().km
+                              context.watch<KilometerGoal>().kmGoal
                           ? const Text(
                               'Good job, take a rest!',
                               style: TextStyle(
@@ -47,7 +46,7 @@ class AdvicePage extends StatelessWidget {
                                   color: Colors.blueGrey),
                             )
                           : const Text(
-                              'You have some km left, go exploring your lands in a sustainable way!',
+                              'You still have a few km left, go and explore your lands!',
                               style: TextStyle(
                                   fontWeight: FontWeight.bold,
                                   color: Colors.blueGrey))
@@ -80,7 +79,7 @@ class AdvicePage extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(20),
                   child: Text(
-                      'Leave your car at home! By walking or cycling you save about 100 g/km of CO2'),
+                      'Leave your car at home! Walking or cycling saves about 100 g/km of CO2'),
                 ),
               ),
             ),
@@ -108,13 +107,13 @@ class AdvicePage extends StatelessWidget {
                 child: Padding(
                   padding: EdgeInsets.all(20),
                   child: Text(
-                      'Respect the nature and local culture. Share your activities with other people, it will be great!'),
+                      'Respect nature and local culture. Share your activities with other people, it will be great!'),
                 ),
               ),
             ),
           ],
         ),
-      )),
+      ),
     );
   }
 }
