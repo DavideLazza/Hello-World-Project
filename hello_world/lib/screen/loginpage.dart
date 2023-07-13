@@ -46,7 +46,7 @@ class _LoginPageState extends State<LoginPage> {
   Future<String> _signUpUser(SignupData data) async {
     userid = data.name!;
     psw = data.password!;
-    return 'you can now log in';
+    return 'you can now do the log in';
   } // _signUpUser
 
   Future<String> _recoverPassword(String email) async {

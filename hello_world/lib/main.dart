@@ -21,7 +21,7 @@ Future<void> main() async {
       ChangeNotifierProvider(create: (_) => KilometerGoal()),
       ChangeNotifierProvider(create: (_) => KilometerDone())
     ],
-    child: MyApp(),
+    child: const MyApp(),
   ));
 }
 

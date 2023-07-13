@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_print
+
 import 'dart:convert';
 import 'dart:io';
 
@@ -55,7 +57,7 @@ class _ImpactPageState extends State<ImpactPage> {
                   fontWeight: FontWeight.bold),
             ),
             const Text(
-              'Max 7 days range',
+              'Max 8 days range',
               style: TextStyle(
                 fontSize: 17,
                 color: Colors.blueGrey,
@@ -112,6 +114,7 @@ class _ImpactPageState extends State<ImpactPage> {
               readOnly: true,
               onTap: () async {
                 var x = DateTime.now().day;
+                var y = DateTime.now().month;
                 DateTime? pickedEndDate = await showDatePicker(
                     context: context,
                     initialDate: DateTime(
@@ -122,18 +125,42 @@ class _ImpactPageState extends State<ImpactPage> {
                         int.parse(dateController1.text.substring(0, 4)),
                         int.parse(dateController1.text.substring(5, 7)),
                         int.parse(dateController1.text.substring(8, 10))),
+                    
+
+                    // IMPLEMENTARE
+
+
+
+
                     lastDate: int.parse(dateController1.text.substring(8, 10)) +
                                 7 <
-                            x
+                            x && int.parse(dateController1.text.substring(5,7)) == y
                         ? DateTime(
                             int.parse(dateController1.text.substring(0, 4)),
                             int.parse(dateController1.text.substring(5, 7)),
                             int.parse(dateController1.text.substring(8, 10)) +
                                 7)
-                        : DateTime(
+                        : int.parse(dateController1.text.substring(8, 10)) +
+                                7 >=
+                            x && int.parse(dateController1.text.substring(5,7)) == y
+                        ?
+                        DateTime(
                             int.parse(dateController1.text.substring(0, 4)),
                             int.parse(dateController1.text.substring(5, 7)),
-                            DateTime.now().day));
+                            DateTime.now().day
+                            )
+                        :
+                         DateTime(
+                            int.parse(dateController1.text.substring(0, 4)),
+                            int.parse(dateController1.text.substring(5, 7)),
+                            int.parse(dateController1.text.substring(8,10)) + 7
+                            )
+                            
+                            
+                            );
+                
+                
+                
                 if (pickedEndDate != null) {
                   // ignore: non_constant_identifier_names
                   String EndDate =
@@ -168,9 +195,18 @@ class _ImpactPageState extends State<ImpactPage> {
                           dateController1.text, dateController2.text);
                       l = act1!.length;
 
-                      // DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
+                      // print list of exercises
                       print(act1);
                       print('Number of exercises: $l');
+
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(
+                        'Data added',
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                        ),
+                      )));
                     },
                     child: const Text(
                       'Get data',
@@ -191,7 +227,15 @@ class _ImpactPageState extends State<ImpactPage> {
                                 act1?[i].duration,
                                 act1?[i].date));
                       }
-                      print('data added');
+                      print('data added to db');
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(
+                        'Data saved',
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                        ),
+                      )));
                     },
                     child: const Text('Save data')),
                 ElevatedButton(
@@ -200,6 +244,14 @@ class _ImpactPageState extends State<ImpactPage> {
                               listen: false)
                           .deleteExercises();
                       print('data removed');
+                      // ignore: use_build_context_synchronously
+                      ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
+                          content: Text(
+                        'Data removed',
+                        style: TextStyle(
+                          fontFamily: "Poppins",
+                        ),
+                      )));
                     },
                     child: const Text('Delete data'))
               ],

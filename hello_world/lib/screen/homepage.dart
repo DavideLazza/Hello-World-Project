@@ -34,6 +34,8 @@ class HomePage extends StatelessWidget {
       age1 = "",
       gender1 = "";
 
+  int x = 0;
+
   static const routename = 'Homepage';
 
   @override
@@ -59,8 +61,8 @@ class HomePage extends StatelessWidget {
           IconButton(
             icon: const Icon(Icons.analytics_outlined),
             onPressed: () {
-              Navigator.of(context)
-                  .push(MaterialPageRoute(builder: (context) => ImpactPage()));
+              Navigator.of(context).push(
+                  MaterialPageRoute(builder: (context) => const ImpactPage()));
             },
           ),
           IconButton(
@@ -106,6 +108,7 @@ class HomePage extends StatelessWidget {
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           final data = snapshot.data as int;
+                          x = data;
                           if (data != 0) {
                             return Card(
                               clipBehavior: Clip.hardEdge,
@@ -151,6 +154,9 @@ class HomePage extends StatelessWidget {
                         }
                       });
                 }),
+
+                // DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
+
                 Consumer<DatabaseRepository>(builder: (context, dbr, child) {
                   return FutureBuilder(
                       future: dbr.getTotalKm(),
@@ -182,8 +188,8 @@ class HomePage extends StatelessWidget {
                                       const Text('Km covered',
                                           style: TextStyle(fontSize: 15)),
                                       Text(
-                                        '${double.parse(data.toStringAsFixed(2))}', //data
-                                        style: TextStyle(fontSize: 40),
+                                        '${double.parse(data.toStringAsFixed(1))}', //data
+                                        style: const TextStyle(fontSize: 40),
                                       )
                                     ],
                                   ),
@@ -191,6 +197,8 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                           );
+
+                          //DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
                         } else {
                           return const CircularProgressIndicator(
                             color: Colors.transparent,

@@ -138,17 +138,20 @@ class WorkoutPage extends StatelessWidget {
                                         child: Column(
                                           children: exercise.speed == null
                                               ? [
-                                                  const Padding(
-                                                    padding:
-                                                        EdgeInsets.all(35.0),
-                                                    child: Text(
-                                                        'Data not available',
-                                                        style: TextStyle(
-                                                            fontSize: 17,
-                                                            color: Colors.red,
-                                                            fontStyle: FontStyle
-                                                                .italic)),
+                                                  const SizedBox(
+                                                    height: 25,
                                                   ),
+                                                  const Text('No data',
+                                                      style: TextStyle(
+                                                          fontSize: 17,
+                                                          color: Colors.red,
+                                                          fontStyle: FontStyle
+                                                              .italic)),
+                                                  const Text(
+                                                    'Avg speed Km/h',
+                                                    style:
+                                                        TextStyle(fontSize: 15),
+                                                  )
                                                 ]
                                               : [
                                                   Text(
@@ -204,19 +207,21 @@ class WorkoutPage extends StatelessWidget {
                                             child: Column(
                                               children: exercise.dist == null
                                                   ? [
-                                                      const Padding(
-                                                        padding: EdgeInsets.all(
-                                                            20.0),
-                                                        child: Text(
-                                                            'Data not available',
-                                                            style: TextStyle(
-                                                                fontSize: 17,
-                                                                color:
-                                                                    Colors.red,
-                                                                fontStyle:
-                                                                    FontStyle
-                                                                        .italic)),
+                                                      const SizedBox(
+                                                        height: 25,
                                                       ),
+                                                      const Text('No data',
+                                                          style: TextStyle(
+                                                              fontSize: 17,
+                                                              color: Colors.red,
+                                                              fontStyle:
+                                                                  FontStyle
+                                                                      .italic)),
+                                                      const Text(
+                                                        'Distance (Km)',
+                                                        style: TextStyle(
+                                                            fontSize: 15),
+                                                      )
                                                     ]
                                                   : [
                                                       Text(
