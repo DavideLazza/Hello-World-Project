@@ -14,8 +14,6 @@ Future<void> main() async {
 
   final databaseRepository = DatabaseRepository(database: database);
 
-// VERIFICARE FUNZIONI, AGGIUNTO MULTIPROVIDER E CHANGENOTIFIERPROVIDER KILOMETER()
-
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider<DatabaseRepository>(
