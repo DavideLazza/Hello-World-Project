@@ -8,7 +8,6 @@ class Exercise {
   @PrimaryKey(autoGenerate: true)
   final int? id;
 
-  //For the sake of simplicity, a Todo has only a name.
   final String? name;
   final int? cal;
   final double? dist;

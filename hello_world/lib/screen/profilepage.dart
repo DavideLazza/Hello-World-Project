@@ -236,9 +236,6 @@ void _toLoginPage(BuildContext context) async {
   final sp = await SharedPreferences.getInstance();
   sp.remove('username');
 
-  // final profiledata = await SharedPreferences.getInstance();
-  // profiledata.remove('first name');
-
   // ignore: use_build_context_synchronously
   Navigator.of(context).pushReplacement(
       MaterialPageRoute(builder: (context) => const LoginPage()));

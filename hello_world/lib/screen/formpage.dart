@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hello_world/provider/kilometergoal.dart';
 import 'package:hello_world/screen/profilepage.dart';
-import 'package:provider/provider.dart';
 
 class FormPage extends StatefulWidget {
   const FormPage({Key? key}) : super(key: key);
@@ -17,7 +15,6 @@ class _FormPageState extends State<FormPage> {
   String weight = "";
   String age = "";
   String gender = "";
-  int goal = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -108,21 +105,6 @@ class _FormPageState extends State<FormPage> {
                   fontFamily: "Poppins", fontSize: 18, color: Colors.blueGrey),
               decoration: const InputDecoration(
                   hintText: 'Gender',
-                  hintStyle: TextStyle(color: Colors.black)),
-            ),
-            TextField(
-              onChanged: (text) {
-                setState(() {
-                  goal = int.parse(text);
-                });
-                context.read<KilometerGoal>().setKm(goal);
-              },
-              textInputAction: TextInputAction.done,
-              keyboardType: TextInputType.number,
-              style: const TextStyle(
-                  fontFamily: "Poppins", fontSize: 18, color: Colors.blueGrey),
-              decoration: const InputDecoration(
-                  hintText: 'Activities goal (Km)',
                   hintStyle: TextStyle(color: Colors.black)),
             ),
           ],

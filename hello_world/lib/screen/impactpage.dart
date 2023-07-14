@@ -125,42 +125,29 @@ class _ImpactPageState extends State<ImpactPage> {
                         int.parse(dateController1.text.substring(0, 4)),
                         int.parse(dateController1.text.substring(5, 7)),
                         int.parse(dateController1.text.substring(8, 10))),
-                    
-
-                    // IMPLEMENTARE
-
-
-
-
                     lastDate: int.parse(dateController1.text.substring(8, 10)) +
-                                7 <
-                            x && int.parse(dateController1.text.substring(5,7)) == y
+                                    7 <
+                                x &&
+                            int.parse(dateController1.text.substring(5, 7)) == y
                         ? DateTime(
                             int.parse(dateController1.text.substring(0, 4)),
                             int.parse(dateController1.text.substring(5, 7)),
                             int.parse(dateController1.text.substring(8, 10)) +
                                 7)
-                        : int.parse(dateController1.text.substring(8, 10)) +
-                                7 >=
-                            x && int.parse(dateController1.text.substring(5,7)) == y
-                        ?
-                        DateTime(
-                            int.parse(dateController1.text.substring(0, 4)),
-                            int.parse(dateController1.text.substring(5, 7)),
-                            DateTime.now().day
-                            )
-                        :
-                         DateTime(
-                            int.parse(dateController1.text.substring(0, 4)),
-                            int.parse(dateController1.text.substring(5, 7)),
-                            int.parse(dateController1.text.substring(8,10)) + 7
-                            )
-                            
-                            
-                            );
-                
-                
-                
+                        : int.parse(dateController1.text.substring(8, 10)) + 7 >=
+                                    x &&
+                                int.parse(dateController1.text.substring(5, 7)) ==
+                                    y
+                            ? DateTime(
+                                int.parse(dateController1.text.substring(0, 4)),
+                                int.parse(dateController1.text.substring(5, 7)),
+                                DateTime.now().day)
+                            : DateTime(
+                                int.parse(dateController1.text.substring(0, 4)),
+                                int.parse(dateController1.text.substring(5, 7)),
+                                int.parse(
+                                        dateController1.text.substring(8, 10)) +
+                                    7));
                 if (pickedEndDate != null) {
                   // ignore: non_constant_identifier_names
                   String EndDate =
@@ -194,11 +181,9 @@ class _ImpactPageState extends State<ImpactPage> {
                       act1 = await _requestData(
                           dateController1.text, dateController2.text);
                       l = act1!.length;
-
                       // print list of exercises
                       print(act1);
                       print('Number of exercises: $l');
-
                       // ignore: use_build_context_synchronously
                       ScaffoldMessenger.of(context).showSnackBar(const SnackBar(
                           content: Text(

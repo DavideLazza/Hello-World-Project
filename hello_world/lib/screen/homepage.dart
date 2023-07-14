@@ -1,9 +1,4 @@
-import 'dart:ffi';
-
 import 'package:flutter/material.dart';
-import 'package:hello_world/database/daos/exerciseDao.dart';
-import 'package:hello_world/provider/kilometerdone.dart';
-
 import 'package:hello_world/repository/databaseRepository.dart';
 import 'package:hello_world/screen/advicepage.dart';
 import 'package:hello_world/screen/impactpage.dart';
@@ -154,16 +149,12 @@ class HomePage extends StatelessWidget {
                         }
                       });
                 }),
-
-                // DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
-
                 Consumer<DatabaseRepository>(builder: (context, dbr, child) {
                   return FutureBuilder(
                       future: dbr.getTotalKm(),
                       builder: (context, snapshot) {
                         if (snapshot.hasData) {
                           final data = snapshot.data as double;
-                          context.read<KilometerDone>().setKmDone(data.round());
                           return Card(
                             clipBehavior: Clip.hardEdge,
                             color: Colors.blueGrey.shade300,
@@ -197,8 +188,6 @@ class HomePage extends StatelessWidget {
                               ),
                             ),
                           );
-
-                          //DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG DEBUG
                         } else {
                           return const CircularProgressIndicator(
                             color: Colors.transparent,
@@ -314,7 +303,7 @@ class HomePage extends StatelessWidget {
                           splashColor: Colors.white,
                           onTap: () {
                             Navigator.of(context).push(MaterialPageRoute(
-                                builder: (context) => AdvicePage()));
+                                builder: (context) => const AdvicePage()));
                           },
                           child: SizedBox(
                             height: 150,

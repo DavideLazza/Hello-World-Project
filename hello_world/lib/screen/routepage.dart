@@ -63,7 +63,7 @@ class RoutePage extends StatelessWidget {
         children: [
           for (var i = 0; i < 7; i++)
             SizedBox(
-              height: 330,
+              height: 340,
               child: Card(
                 margin: const EdgeInsets.only(bottom: 30),
                 shape: RoundedRectangleBorder(
